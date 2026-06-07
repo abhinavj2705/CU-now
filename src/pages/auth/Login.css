@@ -542,8 +542,8 @@
   margin-bottom: 12px;
   padding: 10px 16px;
   border-radius: 12px;
-  background: rgba(220, 38, 38, 0.12);
-  border: 1.5px solid rgba(220, 38, 38, 0.35);
+  background: rgba(220, 38, 38, 0.4);
+  border: 1.5px solid rgba(220, 38, 38, 0.6);
 }
 
 .login-error__icon {
@@ -561,8 +561,8 @@
 }
 
 .dark .login-error {
-  background: rgba(248, 113, 113, 0.14);
-  border: 1.5px solid rgba(248, 113, 113, 0.35);
+  background: rgba(220, 38, 38, 0.5);
+  border: 1.5px solid rgba(248, 113, 113, 0.6);
 }
 
 .dark .login-error__text {
