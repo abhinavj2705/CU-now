@@ -4,6 +4,9 @@
 import { useState, useEffect } from 'react'
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
 import { db } from '../../firebase'
+import { useAuth } from '../../hooks/useAuth'
+import { useGroupConfig } from '../../context/GroupConfigContext'
+import { getGroupBySection } from '../../data/groups'
 import { formatTime } from '../../utils/formatters'
 import { getVenueByName } from '../../data/venues'
 import Navbar from '../../components/Navbar'
@@ -13,6 +16,8 @@ import './Schedule.css'
 const DAY_LABELS = ['Day 1 · Mon', 'Day 2 · Tue', 'Day 3 · Wed', 'Day 4 · Thu', 'Day 5 · Fri', 'Day 6 · Sat']
 
 export default function Schedule() {
+  const { profile, isAdmin } = useAuth()
+  const { groupConfig } = useGroupConfig()
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedDay, setSelectedDay] = useState(1)
@@ -37,7 +42,15 @@ export default function Schedule() {
     }
   }, [])
 
-  const dayEvents = events.filter(e => e.dayNumber === selectedDay && e.status === 'active')
+  // Determine current user's group
+  const userGroup = profile?.group || getGroupBySection(profile?.section, groupConfig)
+
+  const dayEvents = events.filter(e => {
+    if (e.dayNumber !== selectedDay || e.status !== 'active') return false
+    if (isAdmin) return true
+    if (!e.targetGroup || e.targetGroup === 'all') return true
+    return e.targetGroup === userGroup
+  })
 
   function toggleExpand(id) {
     setExpandedId(prev => prev === id ? null : id)

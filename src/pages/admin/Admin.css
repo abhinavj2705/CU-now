@@ -610,3 +610,141 @@
   0%, 100% { opacity: 0.5; }
   50% { opacity: 0.8; }
 }
+
+/* ====== Group badge on event cards ====== */
+.admin-event-group-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--color-accent-dim);
+  color: var(--color-accent);
+  margin-left: 6px;
+}
+
+/* ====== Manage Groups page ====== */
+.manage-groups-desc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.group-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-bg-border);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+  margin-bottom: 12px;
+  transition: border-color 200ms ease;
+}
+
+.group-card:hover {
+  border-color: var(--color-accent-glow);
+}
+
+.group-card--unassigned {
+  border-style: dashed;
+  opacity: 0.7;
+}
+
+.group-card__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.group-card__title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.group-card__count {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.group-card__sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.group-card__empty {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.section-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--color-bg-border);
+  background: var(--color-bg-elevated);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: grab;
+  transition: all 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.section-chip:hover {
+  background: var(--color-accent-dim);
+  border-color: var(--color-accent);
+}
+
+.section-chip:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+.section-chip--unassigned {
+  border-style: dashed;
+  color: var(--color-text-muted);
+}
+
+.section-chip__actions {
+  display: none;
+  gap: 4px;
+  margin-left: 4px;
+}
+
+.section-chip:hover .section-chip__actions {
+  display: inline-flex;
+}
+
+.section-chip__move {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--color-accent);
+  background: var(--color-accent-dim);
+  padding: 2px 5px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 100ms ease;
+}
+
+.section-chip__move:hover {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.manage-groups-actions {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
