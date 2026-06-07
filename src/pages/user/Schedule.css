@@ -42,28 +42,22 @@
 .day-selector {
   max-width: 480px;
   margin: 0 auto;
-  padding: 8px 0;
+  padding: 8px 16px 4px;
 }
 
 .day-selector__scroll {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
   gap: 6px;
-  overflow-x: auto;
-  padding: 0 16px 4px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.day-selector__scroll::-webkit-scrollbar {
-  display: none;
 }
 
 .day-pill {
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 5px 10px;
-  border-radius: 6px;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 4px;
+  border-radius: 8px;
   border: 1px solid var(--color-bg-border);
   background: var(--color-bg-card);
   font-family: 'Inter', system-ui, sans-serif;
@@ -74,7 +68,11 @@
   white-space: nowrap;
   transition: all 150ms ease;
   -webkit-tap-highlight-color: transparent;
-  flex-shrink: 0;
+}
+
+.day-pill:hover {
+  background: var(--color-accent-dim);
+  border-color: var(--color-accent-glow);
 }
 
 .day-pill:active {
@@ -87,11 +85,21 @@
   color: #fff;
 }
 
+.day-pill--active:hover {
+  background: var(--color-accent-light);
+  border-color: var(--color-accent-light);
+}
+
+.day-pill__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .day-pill__count {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
+  min-width: 16px;
   height: 16px;
   border-radius: 4px;
   font-size: 9px;
