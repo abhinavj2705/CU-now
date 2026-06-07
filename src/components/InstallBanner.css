@@ -1,0 +1,113 @@
+/* src/components/InstallBanner.css */
+.install-banner-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  padding: 16px;
+  pointer-events: none; /* Let clicks pass through to underneath when clicking outside the banner */
+  display: flex;
+  justify-content: center;
+}
+
+.install-banner {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-bg-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  padding: 16px;
+  width: 100%;
+  max-width: 440px;
+  pointer-events: auto; /* Re-enable clicks for the banner itself */
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.dark .install-banner {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.install-banner__content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.install-banner__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-lg);
+  background: var(--color-accent-dim);
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.install-banner__text {
+  flex: 1;
+}
+
+.install-banner__title {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.install-banner__desc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.install-banner__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.install-banner__btn {
+  flex: 1;
+  padding: 10px 0;
+  border-radius: var(--radius);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 150ms ease;
+  border: none;
+}
+
+.install-banner__btn--skip {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-bg-border);
+}
+
+.install-banner__btn--skip:active {
+  background: var(--color-bg-border);
+}
+
+.install-banner__btn--install {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.install-banner__btn--install:active {
+  background: var(--color-accent-light);
+  transform: scale(0.98);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

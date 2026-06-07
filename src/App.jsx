@@ -10,6 +10,7 @@ import { ThemeProvider } from './context/ThemeContext'
 // Route guards
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminRoute from './components/AdminRoute'
+import InstallBanner from './components/InstallBanner'
 
 // Loading spinner
 function RouteFallback() {
@@ -99,6 +100,9 @@ export default function App() {
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
         </Suspense>
+        
+        {/* Global PWA Install Banner */}
+        <InstallBanner />
       </AuthProvider>
     </BrowserRouter>
     </ThemeProvider>
