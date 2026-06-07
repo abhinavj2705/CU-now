@@ -237,7 +237,9 @@ export default function CreateEvent() {
         </form>
       </div>
 
-      <Navbar />
+      <div style={{ flexShrink: 0 }}>
+        <Navbar />
+      </div>
     </div>
   )
 }

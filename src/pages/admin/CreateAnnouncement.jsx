@@ -99,7 +99,9 @@ export default function CreateAnnouncement() {
         </form>
       </div>
 
-      <Navbar />
+      <div style={{ flexShrink: 0 }}>
+        <Navbar />
+      </div>
     </div>
   )
 }
