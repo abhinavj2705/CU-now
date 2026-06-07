@@ -222,7 +222,9 @@ export default function Dashboard() {
         )}
       </div>
 
-      <Navbar />
+      <div style={{ flexShrink: 0 }}>
+        <Navbar />
+      </div>
 
       {selectedVenueEvent && (
         <VenueDirections 

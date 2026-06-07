@@ -68,7 +68,6 @@ html {
   overscroll-behavior-y: none;
   scroll-behavior: smooth;
   overflow-x: hidden;
-  width: 100%;
 }
 
 body {
@@ -79,11 +78,10 @@ body {
   background-color: var(--color-bg-base-solid);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100dvh;
+  height: 100dvh;
   overscroll-behavior-y: none;
   -webkit-tap-highlight-color: transparent;
-  overflow-x: hidden;
-  width: 100%;
+  overflow: hidden;
 }
 
 input, select, textarea {
@@ -94,11 +92,28 @@ input, select, textarea {
 }
 
 #root {
-  min-height: 100dvh;
+  height: 100dvh;
   position: relative;
   z-index: 1;
+  overflow: hidden;
+}
+
+/* ---- App Layout: fixed header + scrollable content + fixed bottom nav ---- */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--color-bg-base-solid);
+}
+
+.app-layout__content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
   overflow-x: hidden;
-  width: 100%;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
 }
 
 /* ---- Scrollbar ---- */

@@ -91,7 +91,9 @@ export default function Announcements() {
         )}
       </div>
 
-      <Navbar />
+      <div style={{ flexShrink: 0 }}>
+        <Navbar />
+      </div>
     </div>
   )
 }

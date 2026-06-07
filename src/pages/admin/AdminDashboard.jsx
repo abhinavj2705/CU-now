@@ -233,7 +233,9 @@ export default function AdminDashboard() {
         onCancel={() => setDeleteTarget(null)}
       />
 
-      <Navbar />
+      <div style={{ flexShrink: 0 }}>
+        <Navbar />
+      </div>
     </div>
   )
 }

@@ -144,7 +144,9 @@ export default function Profile() {
         onCancel={() => setShowLogoutModal(false)}
       />
 
-      <Navbar />
+      <div style={{ flexShrink: 0 }}>
+        <Navbar />
+      </div>
     </div>
   )
 }

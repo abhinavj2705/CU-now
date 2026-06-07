@@ -208,7 +208,9 @@ export default function Schedule() {
         />
       )}
 
-      <Navbar />
+      <div style={{ flexShrink: 0 }}>
+        <Navbar />
+      </div>
     </div>
   )
 }
