@@ -21,8 +21,14 @@ export default function Announcements() {
   useEffect(() => {
     const q = query(collection(db, 'announcements'), orderBy('createdAt', 'desc'))
     const unsub = onSnapshot(q, (snap) => {
-      setAnnouncements(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })))
+      const docs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+      setAnnouncements(docs)
       setLoading(false)
+      
+      if (docs.length > 0) {
+        localStorage.setItem('lastReadAnnouncementId', docs[0].id)
+        window.dispatchEvent(new Event('announcementsRead'))
+      }
     })
     return unsub
   }, [])
