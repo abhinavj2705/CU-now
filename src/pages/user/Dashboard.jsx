@@ -92,7 +92,9 @@ export default function Dashboard() {
             {/* ===== ANNOUNCEMENT BANNER ===== */}
             {hasUnread && (
               <div className="dashboard-alert" onClick={() => navigate('/announcements')}>
-                <span className="dashboard-alert__icon">🔔</span>
+                <span className="dashboard-alert__icon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+                </span>
                 <div className="dashboard-alert__content">
                   <p className="dashboard-alert__title">New Update Available</p>
                   <p className="dashboard-alert__desc">Kindly check the updates section for new announcements.</p>
@@ -145,7 +147,9 @@ export default function Dashboard() {
                 ))
               ) : (
                 <div className="empty-state">
-                  <span className="empty-state__emoji">☕</span>
+                  <span className="empty-state__icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+                  </span>
                   <p className="empty-state__text">Nothing happening right now</p>
                   <p className="empty-state__sub">Check the schedule for upcoming events</p>
                 </div>

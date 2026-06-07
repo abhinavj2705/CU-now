@@ -7,20 +7,20 @@
 }
 
 .profile-header {
-  background: var(--color-bg-base-solid);
+  background: var(--color-bg-card);
   border-bottom: 1px solid var(--color-bg-border);
 }
 
 .profile-header__inner {
   max-width: 480px;
   margin: 0 auto;
-  padding: 16px;
+  padding: 14px 16px;
 }
 
 .profile-header__title {
-  font-family: 'Outfit', system-ui, sans-serif;
-  font-size: 20px;
-  font-weight: 700;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
   color: var(--color-text-primary);
 }
 
@@ -37,17 +37,17 @@
 .profile-card {
   background: var(--color-bg-card);
   border: 1px solid var(--color-bg-border);
-  border-radius: 18px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
 .profile-section-title {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   padding: 12px 16px 6px;
 }
 
@@ -60,8 +60,8 @@
 }
 
 .profile-avatar {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -73,8 +73,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .profile-user-info {
@@ -83,8 +83,8 @@
 }
 
 .profile-name {
-  font-family: 'Outfit', system-ui, sans-serif;
-  font-size: 16px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 15px;
   font-weight: 600;
   color: var(--color-text-primary);
   overflow: hidden;
@@ -106,11 +106,11 @@
   gap: 4px;
   margin-top: 4px;
   padding: 2px 8px;
-  border-radius: 100px;
-  background: rgba(124, 58, 237, 0.08);
+  border-radius: var(--radius);
+  background: var(--color-accent-dim);
   color: var(--color-accent);
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 /* Detail rows */
@@ -133,7 +133,7 @@
 .profile-row__icon {
   width: 32px;
   height: 32px;
-  border-radius: 10px;
+  border-radius: var(--radius);
   background: var(--color-bg-elevated);
   display: flex;
   align-items: center;
@@ -148,7 +148,7 @@
 }
 
 .profile-row__label {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--color-text-muted);
 }
 
@@ -167,11 +167,11 @@
   align-items: center;
   gap: 12px;
   padding: 14px 16px;
-  border-radius: 18px;
-  border: 1px solid rgba(124, 58, 237, 0.15);
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(124, 58, 237, 0.02));
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-bg-border);
+  background: var(--color-bg-card);
   cursor: pointer;
-  transition: all 200ms ease;
+  transition: all 150ms ease;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -180,10 +180,10 @@
 }
 
 .admin-panel-btn__icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
-  background: rgba(124, 58, 237, 0.12);
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius);
+  background: var(--color-accent-dim);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -197,19 +197,19 @@
 }
 
 .admin-panel-btn__title {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-text-primary);
 }
 
 .admin-panel-btn__sub {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--color-text-muted);
 }
 
 .admin-panel-btn svg:last-child {
-  color: var(--color-accent);
+  color: var(--color-text-muted);
 }
 
 /* Settings */
@@ -238,7 +238,7 @@
 .profile-setting__icon {
   width: 32px;
   height: 32px;
-  border-radius: 10px;
+  border-radius: var(--radius);
   background: var(--color-bg-elevated);
   display: flex;
   align-items: center;
@@ -248,14 +248,14 @@
 }
 
 .profile-setting__icon--danger {
-  background: rgba(220, 38, 38, 0.08);
+  background: rgba(220, 38, 38, 0.06);
   color: var(--color-danger);
 }
 
 .profile-setting__label {
   flex: 1;
   text-align: left;
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 14px;
   color: var(--color-text-primary);
 }
@@ -263,7 +263,7 @@
 .profile-setting__label--danger {
   flex: 1;
   text-align: left;
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 14px;
   color: var(--color-danger);
 }
@@ -290,7 +290,7 @@
   height: 18px;
   border-radius: 50%;
   background: #fff;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   transition: transform 200ms ease;
 }
 
@@ -301,7 +301,7 @@
 /* Version */
 .profile-version {
   text-align: center;
-  font-size: 10px;
+  font-size: 11px;
   color: var(--color-text-muted);
   padding: 8px 0;
 }

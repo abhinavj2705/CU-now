@@ -10,14 +10,12 @@
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(250, 250, 250, 0.92);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  background: var(--color-bg-card);
   border-bottom: 1px solid var(--color-bg-border);
 }
 
 .dark .admin-header {
-  background: rgba(9, 9, 11, 0.92);
+  background: var(--color-bg-card);
 }
 
 .admin-header__inner {
@@ -30,9 +28,9 @@
 }
 
 .admin-header__title {
-  font-family: 'Outfit', system-ui, sans-serif;
-  font-size: 20px;
-  font-weight: 700;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
   color: var(--color-text-primary);
 }
 
@@ -42,13 +40,13 @@
 }
 
 .admin-back-btn {
-  padding: 8px 14px;
-  border-radius: 10px;
+  padding: 7px 12px;
+  border-radius: var(--radius);
   border: 1px solid var(--color-bg-border);
   background: var(--color-bg-card);
-  font-family: 'Outfit', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 600;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
   color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 150ms ease;
@@ -67,19 +65,19 @@
 /* Quick actions */
 .admin-actions {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 16px;
 }
 
 .admin-action-btn {
   flex: 1;
-  height: 44px;
-  border-radius: 12px;
+  height: 40px;
+  border-radius: var(--radius);
   border: 1px solid var(--color-bg-border);
   background: var(--color-bg-card);
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-text-primary);
   cursor: pointer;
   display: flex;
@@ -97,25 +95,24 @@
   background: var(--color-accent);
   border-color: var(--color-accent);
   color: #fff;
-  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.20);
 }
 
 .admin-action-btn__icon {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 /* ===== ADMIN APPROVAL SECTION ===== */
 .admin-approval-section {
   margin-bottom: 20px;
   padding: 14px;
-  border-radius: 16px;
-  background: rgba(217, 119, 6, 0.06);
-  border: 1.5px solid rgba(217, 119, 6, 0.20);
+  border-radius: var(--radius-lg);
+  background: rgba(202, 138, 4, 0.04);
+  border: 1px solid rgba(202, 138, 4, 0.15);
 }
 
 .dark .admin-approval-section {
-  background: rgba(251, 191, 36, 0.06);
-  border-color: rgba(251, 191, 36, 0.18);
+  background: rgba(250, 204, 21, 0.04);
+  border-color: rgba(250, 204, 21, 0.12);
 }
 
 .admin-approval-header {
@@ -132,31 +129,31 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background: #D97706;
+  background: #CA8A04;
   color: #fff;
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 600;
   flex-shrink: 0;
 }
 
 .admin-approval-title {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--color-text-primary);
 }
 
 .admin-approval-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .admin-approval-card {
   background: var(--color-bg-card);
   border: 1px solid var(--color-bg-border);
-  border-radius: 14px;
+  border-radius: var(--radius);
   padding: 14px;
 }
 
@@ -186,9 +183,9 @@
 }
 
 .admin-approval-card__initial {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--color-text-muted);
 }
 
@@ -198,9 +195,9 @@
 }
 
 .admin-approval-card__name {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-text-primary);
   line-height: 1.2;
 }
@@ -239,10 +236,10 @@
   flex: 1;
   height: 36px;
   border: none;
-  border-radius: 10px;
-  font-family: 'Outfit', system-ui, sans-serif;
+  border-radius: var(--radius);
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -256,39 +253,38 @@
 }
 
 .admin-approval-btn--approve {
-  background: #059669;
+  background: #16A34A;
   color: #fff;
-  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.25);
 }
 
 .admin-approval-btn--approve:hover {
-  background: #047857;
+  background: #15803D;
 }
 
 .admin-approval-btn--reject {
-  background: rgba(220, 38, 38, 0.08);
+  background: rgba(220, 38, 38, 0.06);
   color: #DC2626;
-  border: 1px solid rgba(220, 38, 38, 0.2);
+  border: 1px solid rgba(220, 38, 38, 0.15);
 }
 
 .dark .admin-approval-btn--reject {
-  background: rgba(248, 113, 113, 0.1);
+  background: rgba(248, 113, 113, 0.08);
   color: #F87171;
-  border-color: rgba(248, 113, 113, 0.2);
+  border-color: rgba(248, 113, 113, 0.15);
 }
 
 .admin-approval-btn--reject:hover {
-  background: rgba(220, 38, 38, 0.15);
+  background: rgba(220, 38, 38, 0.12);
 }
 
 .dark .admin-approval-btn--reject:hover {
-  background: rgba(248, 113, 113, 0.18);
+  background: rgba(248, 113, 113, 0.14);
 }
 
 /* Stats */
 .admin-stats {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 20px;
 }
 
@@ -296,23 +292,23 @@
   flex: 1;
   background: var(--color-bg-card);
   border: 1px solid var(--color-bg-border);
-  border-radius: 14px;
+  border-radius: var(--radius);
   padding: 12px;
   text-align: center;
 }
 
 .admin-stat__number {
   display: block;
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 22px;
   font-weight: 700;
   color: var(--color-text-primary);
 }
 
 .admin-stat__label {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--color-text-muted);
-  font-weight: 500;
+  font-weight: 400;
 }
 
 /* Day groups */
@@ -321,9 +317,9 @@
 }
 
 .admin-day-title {
-  font-family: 'Outfit', system-ui, sans-serif;
-  font-size: 13px;
-  font-weight: 700;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
   color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -333,7 +329,7 @@
 .admin-event-list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .admin-event-card {
@@ -342,7 +338,7 @@
   gap: 12px;
   background: var(--color-bg-card);
   border: 1px solid var(--color-bg-border);
-  border-radius: 14px;
+  border-radius: var(--radius);
   padding: 12px 14px;
 }
 
@@ -353,34 +349,34 @@
 
 .admin-event-status {
   display: inline-block;
-  padding: 2px 8px;
-  border-radius: 100px;
+  padding: 2px 6px;
+  border-radius: var(--radius);
   font-size: 9px;
-  font-weight: 700;
+  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   margin-bottom: 4px;
 }
 
 .admin-event-status--active {
-  background: rgba(5, 150, 105, 0.08);
+  background: rgba(22, 163, 74, 0.06);
   color: var(--color-success);
 }
 
 .admin-event-status--cancelled {
-  background: rgba(220, 38, 38, 0.08);
+  background: rgba(220, 38, 38, 0.06);
   color: var(--color-danger);
 }
 
 .admin-event-status--postponed {
-  background: rgba(217, 119, 6, 0.08);
+  background: rgba(202, 138, 4, 0.06);
   color: var(--color-warning);
 }
 
 .admin-event-name {
-  font-family: 'Outfit', system-ui, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--color-text-primary);
   white-space: nowrap;
   overflow: hidden;
@@ -388,7 +384,7 @@
 }
 
 .admin-event-meta {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--color-text-muted);
   margin-top: 2px;
 }
@@ -400,9 +396,9 @@
 }
 
 .admin-icon-btn {
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius);
   border: 1px solid var(--color-bg-border);
   background: var(--color-bg-elevated);
   display: flex;
@@ -418,8 +414,8 @@
 }
 
 .admin-icon-btn--danger:hover {
-  border-color: rgba(220, 38, 38, 0.3);
-  background: rgba(220, 38, 38, 0.06);
+  border-color: rgba(220, 38, 38, 0.2);
+  background: rgba(220, 38, 38, 0.04);
 }
 
 /* ===== FORM PAGES ===== */
@@ -442,37 +438,35 @@
 }
 
 .admin-form .form-label {
-  font-family: 'Outfit', system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 8px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 6px;
 }
 
 .admin-form .form-input,
 .admin-form .form-select,
 .admin-form .form-textarea {
   width: 100%;
-  padding: 0 14px;
-  border-radius: 12px;
+  padding: 0 12px;
+  border-radius: var(--radius);
   border: 1px solid var(--color-bg-border);
-  background: var(--color-bg-elevated);
-  font-family: 'Outfit', system-ui, sans-serif;
+  background: transparent;
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 14px;
   color: var(--color-text-primary);
   outline: none;
-  transition: border-color 200ms ease;
+  transition: border-color 150ms ease;
 }
 
 .admin-form .form-input,
 .admin-form .form-select {
-  height: 46px;
+  height: 40px;
 }
 
 .admin-form .form-textarea {
-  padding: 12px 14px;
+  padding: 10px 12px;
   resize: none;
   min-height: 100px;
 }
@@ -481,6 +475,8 @@
 .admin-form .form-select:focus,
 .admin-form .form-textarea:focus {
   border-color: var(--color-accent);
+  outline: 2px solid var(--color-accent-dim);
+  outline-offset: 0;
 }
 
 .admin-form .form-input--error,
@@ -495,33 +491,32 @@
 }
 
 .admin-form .form-error {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--color-danger);
   margin-top: 4px;
 }
 
 .admin-submit-btn {
   width: 100%;
-  height: 48px;
+  height: 40px;
   background: var(--color-accent);
   color: #fff;
   border: none;
-  border-radius: 12px;
-  font-family: 'Outfit', system-ui, sans-serif;
+  border-radius: var(--radius);
+  font-family: 'Inter', system-ui, sans-serif;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 200ms ease;
-  box-shadow: 0 4px 16px rgba(124, 58, 237, 0.20);
+  transition: all 150ms ease;
   margin-bottom: 16px;
 }
 
 .admin-submit-btn:hover:not(:disabled) {
-  box-shadow: 0 6px 24px rgba(124, 58, 237, 0.30);
+  opacity: 0.9;
 }
 
 .admin-submit-btn:active:not(:disabled) {
@@ -529,7 +524,7 @@
 }
 
 .admin-submit-btn:disabled {
-  opacity: 0.55;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
@@ -537,18 +532,18 @@
 .admin-skeleton {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
 .skeleton-card {
   height: 72px;
-  border-radius: 14px;
+  border-radius: var(--radius);
   background: var(--color-bg-elevated);
   animation: skeletonPulse 1.5s ease-in-out infinite;
 }
 
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
