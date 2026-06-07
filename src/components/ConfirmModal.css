@@ -1,0 +1,86 @@
+/* src/components/ConfirmModal.css */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: modalFadeIn 150ms ease-out both;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 320px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-bg-border);
+  border-radius: 20px;
+  padding: 24px;
+  animation: modalScaleIn 200ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+.modal-title {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 8px;
+}
+
+.modal-message {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.modal-btn {
+  flex: 1;
+  height: 42px;
+  border: none;
+  border-radius: 12px;
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 150ms ease, opacity 150ms ease;
+}
+
+.modal-btn:active {
+  transform: scale(0.97);
+}
+
+.modal-btn--cancel {
+  background: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+}
+
+.modal-btn--confirm {
+  background: var(--color-accent);
+  color: #fff;
+}
+
+.modal-btn--danger {
+  background: var(--color-danger);
+  color: #fff;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes modalScaleIn {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
