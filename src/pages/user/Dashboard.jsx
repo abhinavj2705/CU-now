@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
 import { db } from '../../firebase'
 import { useAuth } from '../../hooks/useAuth'
+import { useGroupConfig } from '../../context/GroupConfigContext'
+import { getGroupBySection } from '../../data/groups'
 import { useUnreadAnnouncements } from '../../hooks/useUnreadAnnouncements'
 import { formatTime, getCountdown } from '../../utils/formatters'
 import { getVenueByName } from '../../data/venues'
@@ -16,7 +18,8 @@ import './Dashboard.css'
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const { user } = useAuth()
+  const { user, profile, isAdmin } = useAuth()
+  const { groupConfig } = useGroupConfig()
   const { hasUnread } = useUnreadAnnouncements()
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
@@ -40,8 +43,19 @@ export default function Dashboard() {
     return unsub
   }, [])
 
-  // Determine current, upcoming events
-  const activeEvents = events.filter(e => e.status === 'active')
+  // Determine current user's group
+  const userGroup = profile?.group || getGroupBySection(profile?.section, groupConfig)
+
+  // Determine current, upcoming events — filtered by group
+  const activeEvents = events.filter(e => {
+    if (e.status !== 'active') return false
+    // Admins see everything
+    if (isAdmin) return true
+    // No targetGroup or 'all' → visible to everyone
+    if (!e.targetGroup || e.targetGroup === 'all') return true
+    // Match user's group
+    return e.targetGroup === userGroup
+  })
 
   const happeningNow = activeEvents.filter(e => {
     const start = e.startTime?.toDate ? e.startTime.toDate() : new Date(e.startTime)

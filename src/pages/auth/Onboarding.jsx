@@ -1,17 +1,21 @@
 // src/pages/auth/Onboarding.jsx
-// Profile completion — auto-detected regNumber (read-only), class input
+// Profile completion — auto-detected regNumber (read-only), course + section input
 
 import { useState, useMemo } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
 import { db } from '../../firebase'
 import { useAuth } from '../../hooks/useAuth'
+import { useGroupConfig } from '../../context/GroupConfigContext'
 import { extractRegNumber } from '../../utils/formatters'
+import { getGroupBySection, getSectionOptions } from '../../data/groups'
+import CustomSelect from '../../components/CustomSelect'
 import christLogo from '../../assets/christ-logo.png'
 import './Onboarding.css'
 
 export default function Onboarding() {
   const { user, profile } = useAuth()
+  const { groupConfig } = useGroupConfig()
   const navigate = useNavigate()
 
   // Auto-detect reg number from display name
@@ -19,14 +23,16 @@ export default function Onboarding() {
     return profile?.regNumber || extractRegNumber(user?.displayName) || ''
   }, [profile, user])
 
-  const [classInput, setClassInput] = useState('')
+  const [courseInput, setCourseInput] = useState('')
+  const [sectionInput, setSectionInput] = useState('')
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
 
   function validate() {
     const e = {}
     if (!regNumber) e.regNumber = 'Could not detect registration number. Contact admin.'
-    if (!classInput.trim()) e.class = 'Class is required (e.g. 1BTPHY H)'
+    if (!courseInput.trim()) e.course = 'Course is required (e.g. 1BTPHY)'
+    if (!sectionInput) e.section = 'Section is required'
     return e
   }
 
@@ -39,13 +45,20 @@ export default function Onboarding() {
     }
     setLoading(true)
     try {
+      const course = courseInput.trim().toUpperCase()
+      const section = sectionInput.toUpperCase()
+      const group = getGroupBySection(section, groupConfig)
+
       await setDoc(doc(db, 'users', user.uid), {
         uid: user.uid,
         name: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
         regNumber,
-        class: classInput.trim().toUpperCase(),
+        class: `${course} ${section}`,
+        course,
+        section,
+        group,
         onboarded: true,
         updatedAt: serverTimestamp(),
       }, { merge: true })
@@ -59,6 +72,11 @@ export default function Onboarding() {
   }
 
   if (!user) return <Navigate to="/login" replace />
+
+  const sectionOptions = getSectionOptions(groupConfig)
+
+  // Show group preview when section is selected
+  const selectedGroup = sectionInput ? getGroupBySection(sectionInput, groupConfig) : null
 
   return (
     <div className="onboarding-page">
@@ -97,25 +115,50 @@ export default function Onboarding() {
             )}
           </div>
 
-          {/* Class */}
+          {/* Course */}
           <div className="form-group">
             <label className="form-label">
-              Class <span className="form-required">*</span>
+              Course <span className="form-required">*</span>
             </label>
             <input
-              id="class"
-              name="class"
+              id="course"
+              name="course"
               type="text"
-              value={classInput}
-              onChange={(e) => { setClassInput(e.target.value); setErrors(prev => ({ ...prev, class: '' })) }}
-              placeholder="e.g. 1BTPHY H, 1BTCS A"
-              className={`form-input ${errors.class ? 'form-input--error' : ''}`}
+              value={courseInput}
+              onChange={(e) => { setCourseInput(e.target.value); setErrors(prev => ({ ...prev, course: '' })) }}
+              placeholder="e.g. 1BTPHY, 1BTCS"
+              className={`form-input ${errors.course ? 'form-input--error' : ''}`}
             />
-            {errors.class ? (
-              <p className="form-error">{errors.class}</p>
+            {errors.course ? (
+              <p className="form-error">{errors.course}</p>
             ) : (
               <p className="form-hint">
-                Enter your class code (e.g. 1BTPHY H)
+                Enter your course code (without section letter)
+              </p>
+            )}
+          </div>
+
+          {/* Section */}
+          <div className="form-group">
+            <label className="form-label">
+              Section <span className="form-required">*</span>
+            </label>
+            <CustomSelect
+              value={sectionInput}
+              options={sectionOptions}
+              onChange={(val) => { setSectionInput(val); setErrors(prev => ({ ...prev, section: '' })) }}
+              error={errors.section}
+              placeholder="Select your section"
+            />
+            {errors.section && (
+              <p className="form-error">{errors.section}</p>
+            )}
+            {selectedGroup && (
+              <p className="form-hint form-hint--success">
+                <svg className="form-hint__check" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+                You'll be assigned to Group {selectedGroup}
               </p>
             )}
           </div>

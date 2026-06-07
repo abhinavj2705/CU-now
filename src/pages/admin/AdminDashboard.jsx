@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { collection, query, orderBy, onSnapshot, doc, deleteDoc, updateDoc, where, serverTimestamp } from 'firebase/firestore'
 import { db } from '../../firebase'
 import { formatTime } from '../../utils/formatters'
+import { getGroupLabel } from '../../data/groups'
 import Navbar from '../../components/Navbar'
 import ConfirmModal from '../../components/ConfirmModal'
 import './Admin.css'
@@ -109,6 +110,12 @@ export default function AdminDashboard() {
             </span>
             Announcement
           </button>
+          <button className="admin-action-btn" onClick={() => navigate('/admin/manage-groups')}>
+            <span className="admin-action-btn__icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+            </span>
+            Groups
+          </button>
         </div>
 
         {/* ===== PENDING ADMIN REQUESTS ===== */}
@@ -200,6 +207,9 @@ export default function AdminDashboard() {
                       <div className="admin-event-info">
                         <span className={`admin-event-status admin-event-status--${event.status}`}>
                           {event.status}
+                        </span>
+                        <span className="admin-event-group-badge">
+                          {getGroupLabel(event.targetGroup)}
                         </span>
                         <h4 className="admin-event-name">{event.name}</h4>
                         <p className="admin-event-meta">

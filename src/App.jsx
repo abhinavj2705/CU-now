@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import AuthProvider from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
+import GroupConfigProvider from './context/GroupConfigContext'
 
 // Route guards
 import ProtectedRoute from './components/ProtectedRoute'
@@ -37,11 +38,13 @@ const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
 const CreateEvent = lazy(() => import('./pages/admin/CreateEvent'))
 const EditEvent = lazy(() => import('./pages/admin/EditEvent'))
 const CreateAnnouncement = lazy(() => import('./pages/admin/CreateAnnouncement'))
+const ManageGroups = lazy(() => import('./pages/admin/ManageGroups'))
 
 export default function App() {
   return (
     <ThemeProvider>
     <BrowserRouter>
+      <GroupConfigProvider>
       <AuthProvider>
         {/* Global toast notifications */}
         <Toaster
@@ -94,6 +97,9 @@ export default function App() {
           <Route path="/admin/create-announcement" element={
             <AdminRoute><CreateAnnouncement /></AdminRoute>
           } />
+          <Route path="/admin/manage-groups" element={
+            <AdminRoute><ManageGroups /></AdminRoute>
+          } />
 
           {/* Default redirect */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
@@ -104,6 +110,7 @@ export default function App() {
         {/* Global PWA Install Banner */}
         <InstallBanner />
       </AuthProvider>
+      </GroupConfigProvider>
     </BrowserRouter>
     </ThemeProvider>
   )

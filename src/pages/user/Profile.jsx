@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { signOut } from 'firebase/auth'
 import { auth } from '../../firebase'
 import { useAuth } from '../../hooks/useAuth'
+import { useGroupConfig } from '../../context/GroupConfigContext'
+import { getGroupBySection, getGroupLabel } from '../../data/groups'
 import { useTheme } from '../../context/ThemeContext'
 import Navbar from '../../components/Navbar'
 import ConfirmModal from '../../components/ConfirmModal'
@@ -11,6 +13,7 @@ import './Profile.css'
 
 export default function Profile() {
   const { user, profile, isAdmin } = useAuth()
+  const { groupConfig } = useGroupConfig()
   const { isDark, toggleTheme } = useTheme()
   const navigate = useNavigate()
   const [showLogoutModal, setShowLogoutModal] = useState(false)
@@ -73,6 +76,11 @@ export default function Profile() {
               icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>}
               label="Class"
               value={profile?.class || '—'}
+            />
+            <ProfileRow
+              icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>}
+              label="Section · Group"
+              value={profile?.section ? `Section ${profile.section} · ${getGroupLabel(profile.group || getGroupBySection(profile.section, groupConfig), groupConfig)}` : '—'}
             />
             <ProfileRow
               icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8}><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>}
