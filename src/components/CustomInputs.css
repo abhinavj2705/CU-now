@@ -1,0 +1,250 @@
+/* src/components/CustomInputs.css */
+
+.custom-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.custom-input-trigger {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--color-bg-border);
+  background: var(--color-bg-elevated);
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 200ms ease;
+  user-select: none;
+}
+
+.custom-input-trigger:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+.custom-input-trigger--active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+}
+
+.custom-input-trigger--error {
+  border-color: var(--color-danger);
+}
+
+.custom-input-value {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom-input-value--placeholder {
+  color: var(--color-text-muted);
+}
+
+.custom-input-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.custom-input-trigger--active .custom-input-icon {
+  transform: rotate(180deg);
+}
+
+/* Time Dropdown */
+.custom-picker-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  min-width: 240px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-bg-border);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  z-index: 50;
+  animation: dropdownIn 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top;
+}
+
+.dark .custom-picker-dropdown {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes dropdownIn {
+  from { opacity: 0; transform: scaleY(0.95); }
+  to { opacity: 1; transform: scaleY(1); }
+}
+
+.time-picker-columns {
+  display: flex;
+  gap: 12px;
+  height: 180px;
+}
+
+.time-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.time-column-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.time-scroll {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 4px;
+}
+
+.time-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.time-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-bg-border);
+  border-radius: 4px;
+}
+
+.time-option {
+  width: 100%;
+  padding: 8px 0;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.time-option:hover {
+  background: var(--color-bg-elevated);
+}
+
+.time-option--active {
+  background: var(--color-accent) !important;
+  color: #fff;
+  font-weight: 600;
+}
+
+.time-column--ampm {
+  border-left: 1px solid var(--color-bg-border);
+  padding-left: 12px;
+}
+
+.ampm-toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  justify-content: center;
+}
+
+.ampm-btn {
+  width: 100%;
+  padding: 10px 0;
+  border: 1px solid var(--color-bg-border);
+  background: var(--color-bg-elevated);
+  border-radius: 10px;
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.ampm-btn--active {
+  border-color: var(--color-accent);
+  background: rgba(124, 58, 237, 0.1);
+  color: var(--color-accent);
+}
+
+/* Day Picker Horizontal Scroll */
+.custom-day-picker {
+  width: 100%;
+  overflow: hidden;
+}
+
+.day-scroll-container {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 12px;
+  padding-top: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+.day-scroll-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.day-pill {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  height: 64px;
+  border-radius: 16px;
+  border: 1.5px solid var(--color-bg-border);
+  background: var(--color-bg-elevated);
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.day-pill:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+  transform: translateY(-2px);
+}
+
+.day-pill--active {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.25);
+}
+
+.day-pill-label {
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.day-pill--active .day-pill-label {
+  color: #fff;
+}
+
+.day-pill-sub {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.day-pill--active .day-pill-sub {
+  color: rgba(255, 255, 255, 0.8);
+}
