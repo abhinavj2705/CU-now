@@ -56,6 +56,29 @@
   height: 22px;
 }
 
+.nav-item__icon-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.nav-item__badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background-color: #ef4444; /* red-500 */
+  border-radius: 50%;
+  border: 2px solid var(--color-bg-card);
+  animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 4px rgba(239, 68, 68, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
 .nav-item__label {
   font-family: 'Outfit', system-ui, sans-serif;
   font-size: 10px;

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
 import { db } from '../../firebase'
 import { useAuth } from '../../hooks/useAuth'
+import { useUnreadAnnouncements } from '../../hooks/useUnreadAnnouncements'
 import { formatTime, getCountdown } from '../../utils/formatters'
 import Navbar from '../../components/Navbar'
 import christLogo from '../../assets/christ-logo.png'
@@ -14,6 +15,7 @@ import './Dashboard.css'
 export default function Dashboard() {
   const navigate = useNavigate()
   const { user } = useAuth()
+  const { hasUnread } = useUnreadAnnouncements()
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
   const [now, setNow] = useState(new Date())
@@ -87,6 +89,20 @@ export default function Dashboard() {
           </div>
         ) : (
           <>
+            {/* ===== ANNOUNCEMENT BANNER ===== */}
+            {hasUnread && (
+              <div className="dashboard-alert" onClick={() => navigate('/announcements')}>
+                <span className="dashboard-alert__icon">🔔</span>
+                <div className="dashboard-alert__content">
+                  <p className="dashboard-alert__title">New Update Available</p>
+                  <p className="dashboard-alert__desc">Kindly check the updates section for new announcements.</p>
+                </div>
+                <svg className="dashboard-alert__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </div>
+            )}
+
             {/* ===== HAPPENING NOW ===== */}
             <section className="dashboard-section">
               <div className="section-header">
