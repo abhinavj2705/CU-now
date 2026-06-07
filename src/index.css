@@ -67,6 +67,8 @@ html {
   background-color: var(--color-bg-base-solid);
   overscroll-behavior-y: none;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -80,6 +82,8 @@ body {
   min-height: 100dvh;
   overscroll-behavior-y: none;
   -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 input, select, textarea {
@@ -93,6 +97,8 @@ input, select, textarea {
   min-height: 100dvh;
   position: relative;
   z-index: 1;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* ---- Scrollbar ---- */
