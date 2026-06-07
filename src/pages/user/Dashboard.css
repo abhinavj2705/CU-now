@@ -140,6 +140,10 @@
   margin-bottom: 12px;
 }
 
+.section-header .section-title {
+  margin-bottom: 0;
+}
+
 .section-header__dot {
   width: 8px;
   height: 8px;
