@@ -248,6 +248,7 @@ export default function EditEvent() {
                 value={form.endTime} 
                 onChange={handleChange} 
                 error={errors.endTime} 
+                alignRight={true}
               />
             </div>
           </div>

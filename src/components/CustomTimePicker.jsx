@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import './CustomInputs.css'
 
-export default function CustomTimePicker({ name, value, onChange, error }) {
+export default function CustomTimePicker({ name, value, onChange, error, alignRight }) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef(null)
 
@@ -77,7 +77,7 @@ export default function CustomTimePicker({ name, value, onChange, error }) {
       </div>
 
       {isOpen && (
-        <div className="custom-picker-dropdown custom-time-dropdown">
+        <div className={`custom-picker-dropdown custom-time-dropdown ${alignRight ? 'custom-picker-dropdown--right' : ''}`}>
           <div className="time-picker-columns">
             {/* Hours */}
             <div className="time-column">

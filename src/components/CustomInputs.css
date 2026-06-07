@@ -79,6 +79,11 @@
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.4);
 }
 
+.custom-picker-dropdown--right {
+  left: auto;
+  right: 0;
+}
+
 @keyframes dropdownUp {
   from { opacity: 0; transform: scaleY(0.95); }
   to { opacity: 1; transform: scaleY(1); }

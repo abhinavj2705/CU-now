@@ -216,6 +216,7 @@ export default function CreateEvent() {
                 value={form.endTime} 
                 onChange={handleChange} 
                 error={errors.endTime} 
+                alignRight={true}
               />
               {errors.endTime && <p className="form-error">{errors.endTime}</p>}
             </div>
