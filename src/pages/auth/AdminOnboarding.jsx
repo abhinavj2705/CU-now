@@ -4,7 +4,8 @@
 import { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { doc, setDoc, serverTimestamp } from 'firebase/firestore'
-import { db } from '../../firebase'
+import { signOut } from 'firebase/auth'
+import { auth, db } from '../../firebase'
 import { useAuth } from '../../hooks/useAuth'
 import christLogo from '../../assets/christ-logo.png'
 import './Onboarding.css'
@@ -38,7 +39,10 @@ export default function AdminOnboarding() {
           <p className="onboarding-subtitle" style={{ marginBottom: 20 }}>
             Your admin access request has been submitted. Please wait for an existing admin to approve it.
           </p>
-          <button className="onboarding-submit" onClick={() => navigate('/login')}>
+          <button className="onboarding-submit" onClick={async () => {
+            await signOut(auth)
+            navigate('/login')
+          }}>
             Back to Login
           </button>
         </div>
@@ -56,7 +60,10 @@ export default function AdminOnboarding() {
           <p className="onboarding-subtitle" style={{ marginBottom: 20 }}>
             Your admin access request was not approved. Contact an existing admin for help.
           </p>
-          <button className="onboarding-submit" onClick={() => navigate('/login')}>
+          <button className="onboarding-submit" onClick={async () => {
+            await signOut(auth)
+            navigate('/login')
+          }}>
             Back to Login
           </button>
         </div>
