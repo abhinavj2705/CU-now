@@ -358,12 +358,12 @@ export default function Login() {
         )}
 
         {/* ---- SECURITY BADGE ---- */}
-        <div className="login-security login-animate-in login-animate-in--security">
+        <a href="https://drive.google.com/file/d/1800aQog5PJE6LwwWvFE0_2mk0nEyoVIl/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="login-security login-animate-in login-animate-in--security">
           <ShieldCheckIcon className="login-security__icon" />
           <span className="login-security__text">
             Secure platform. Your data is protected.
           </span>
-        </div>
+        </a>
 
         {/* ---- FOOTER ---- */}
         <p className="login-footer login-animate-in login-animate-in--footer">

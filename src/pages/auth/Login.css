@@ -518,6 +518,17 @@
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   margin-bottom: 0;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+.login-security:hover {
+  border-color: var(--login-gold);
+}
+
+.login-security:hover .login-security__text {
+  text-decoration: underline;
 }
 
 .login-security__icon {
