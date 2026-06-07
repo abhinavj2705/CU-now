@@ -6,6 +6,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { doc, getDoc, updateDoc, serverTimestamp, Timestamp } from 'firebase/firestore'
 import { db } from '../../firebase'
 import Navbar from '../../components/Navbar'
+import CustomDayPicker from '../../components/CustomDayPicker'
+import CustomDatePicker from '../../components/CustomDatePicker'
+import CustomTimePicker from '../../components/CustomTimePicker'
 import './Admin.css'
 
 export default function EditEvent() {
@@ -126,14 +129,11 @@ export default function EditEvent() {
         <form onSubmit={handleSubmit} className="admin-form">
           <div className="form-group">
             <label className="form-label">Day Number *</label>
-            <select name="dayNumber" value={form.dayNumber} onChange={handleChange} className="form-select">
-              <option value="1">Day 1 · Monday</option>
-              <option value="2">Day 2 · Tuesday</option>
-              <option value="3">Day 3 · Wednesday</option>
-              <option value="4">Day 4 · Thursday</option>
-              <option value="5">Day 5 · Friday</option>
-              <option value="6">Day 6 · Saturday</option>
-            </select>
+            <CustomDayPicker 
+              name="dayNumber" 
+              value={form.dayNumber} 
+              onChange={handleChange} 
+            />
           </div>
 
           <div className="form-group">
@@ -150,18 +150,33 @@ export default function EditEvent() {
 
           <div className="form-group">
             <label className="form-label">Date *</label>
-            <input name="date" type="date" value={form.date} onChange={handleChange} className={`form-input ${errors.date ? 'form-input--error' : ''}`} />
+            <CustomDatePicker 
+              name="date" 
+              value={form.date} 
+              onChange={handleChange} 
+              error={errors.date} 
+            />
             {errors.date && <p className="form-error">{errors.date}</p>}
           </div>
 
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">Start Time *</label>
-              <input name="startTime" type="time" value={form.startTime} onChange={handleChange} className={`form-input ${errors.startTime ? 'form-input--error' : ''}`} />
+              <CustomTimePicker 
+                name="startTime" 
+                value={form.startTime} 
+                onChange={handleChange} 
+                error={errors.startTime} 
+              />
             </div>
             <div className="form-group">
               <label className="form-label">End Time *</label>
-              <input name="endTime" type="time" value={form.endTime} onChange={handleChange} className={`form-input ${errors.endTime ? 'form-input--error' : ''}`} />
+              <CustomTimePicker 
+                name="endTime" 
+                value={form.endTime} 
+                onChange={handleChange} 
+                error={errors.endTime} 
+              />
             </div>
           </div>
 
