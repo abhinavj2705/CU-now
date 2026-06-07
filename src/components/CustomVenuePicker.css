@@ -1,0 +1,131 @@
+/* src/components/CustomVenuePicker.css */
+
+.venue-picker {
+  position: relative;
+  width: 100%;
+}
+
+/* Trigger button */
+.venue-picker__trigger {
+  width: 100%;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-bg-border);
+  background: transparent;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  transition: border-color 150ms ease;
+  -webkit-tap-highlight-color: transparent;
+  text-align: left;
+}
+
+.venue-picker__trigger--open {
+  border-color: var(--color-accent);
+}
+
+.venue-picker--error .venue-picker__trigger {
+  border-color: var(--color-danger);
+}
+
+.venue-picker__trigger--placeholder .venue-picker__value {
+  color: var(--color-text-muted);
+}
+
+.venue-picker__value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.venue-picker__chevron {
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.venue-picker__chevron--open {
+  transform: rotate(180deg);
+}
+
+/* Dropdown */
+.venue-picker__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 50;
+  max-height: 220px;
+  overflow-y: auto;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-bg-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 4px;
+  animation: venueDropIn 150ms cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+/* Scrollbar for dropdown */
+.venue-picker__dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.venue-picker__dropdown::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.venue-picker__dropdown::-webkit-scrollbar-thumb {
+  background: var(--color-bg-border);
+  border-radius: 99px;
+}
+
+/* Option */
+.venue-picker__option {
+  width: 100%;
+  padding: 8px 10px;
+  border: none;
+  border-radius: calc(var(--radius) - 2px);
+  background: transparent;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  transition: background 100ms ease;
+}
+
+.venue-picker__option:hover {
+  background: var(--color-bg-elevated);
+}
+
+.venue-picker__option--active {
+  background: var(--color-accent-dim);
+  color: var(--color-accent);
+  font-weight: 500;
+}
+
+.venue-picker__option--active:hover {
+  background: var(--color-accent-dim);
+}
+
+.venue-picker__option svg {
+  color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+@keyframes venueDropIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}

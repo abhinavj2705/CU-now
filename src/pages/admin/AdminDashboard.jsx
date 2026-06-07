@@ -40,12 +40,16 @@ export default function AdminDashboard() {
 
   async function handleDelete() {
     if (!deleteTarget) return
+    const targetId = deleteTarget.id
+    // Optimistic: remove from local state immediately
+    setEvents(prev => prev.filter(e => e.id !== targetId))
+    setDeleteTarget(null)
     try {
-      await deleteDoc(doc(db, 'events', deleteTarget.id))
+      await deleteDoc(doc(db, 'events', targetId))
     } catch (err) {
       console.error(err)
+      // If server delete fails, onSnapshot will restore the event
     }
-    setDeleteTarget(null)
   }
 
   async function handleApproveAdmin(userId) {

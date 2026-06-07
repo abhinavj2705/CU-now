@@ -5,10 +5,12 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { doc, getDoc, updateDoc, serverTimestamp, Timestamp } from 'firebase/firestore'
 import { db } from '../../firebase'
+import { VENUE_LIST, getDefaultDirections } from '../../data/venues'
 import Navbar from '../../components/Navbar'
 import CustomDayPicker from '../../components/CustomDayPicker'
 import CustomDatePicker from '../../components/CustomDatePicker'
 import CustomTimePicker from '../../components/CustomTimePicker'
+import CustomVenuePicker from '../../components/CustomVenuePicker'
 import './Admin.css'
 
 export default function EditEvent() {
@@ -19,6 +21,7 @@ export default function EditEvent() {
     dayNumber: '1',
     name: '',
     venue: '',
+    venueDirections: '',
     date: '',
     startTime: '',
     endTime: '',
@@ -42,6 +45,7 @@ export default function EditEvent() {
             dayNumber: String(data.dayNumber || 1),
             name: data.name || '',
             venue: data.venue || '',
+            venueDirections: data.venueDirections || getDefaultDirections(data.venue || ''),
             date: data.date || startDate.toISOString().split('T')[0],
             startTime: startDate.toTimeString().slice(0, 5),
             endTime: endDate.toTimeString().slice(0, 5),
@@ -61,7 +65,7 @@ export default function EditEvent() {
   function validate() {
     const e = {}
     if (!form.name.trim()) e.name = 'Event name is required'
-    if (!form.venue.trim()) e.venue = 'Venue is required'
+    if (!form.venue) e.venue = 'Venue is required'
     if (!form.date) e.date = 'Date is required'
     if (!form.startTime) e.startTime = 'Start time required'
     if (!form.endTime) e.endTime = 'End time required'
@@ -72,6 +76,22 @@ export default function EditEvent() {
     const { name, value } = e.target
     setForm(prev => ({ ...prev, [name]: value }))
     setErrors(prev => ({ ...prev, [name]: '' }))
+  }
+
+  function handleVenueChange(venueName) {
+    setForm(prev => ({
+      ...prev,
+      venue: venueName,
+      venueDirections: getDefaultDirections(venueName),
+    }))
+    setErrors(prev => ({ ...prev, venue: '' }))
+  }
+
+  function handleCopyDefault() {
+    const defaultDir = getDefaultDirections(form.venue)
+    if (defaultDir) {
+      setForm(prev => ({ ...prev, venueDirections: defaultDir }))
+    }
   }
 
   async function handleSubmit(e) {
@@ -91,6 +111,7 @@ export default function EditEvent() {
         dayNumber: parseInt(form.dayNumber),
         name: form.name.trim(),
         venue: form.venue.trim(),
+        venueDirections: form.venueDirections.trim(),
         date: form.date,
         startTime,
         endTime,
@@ -142,11 +163,44 @@ export default function EditEvent() {
             {errors.name && <p className="form-error">{errors.name}</p>}
           </div>
 
+          {/* Venue — Custom Dropdown */}
           <div className="form-group">
             <label className="form-label">Venue *</label>
-            <input name="venue" value={form.venue} onChange={handleChange} placeholder="e.g. Main Auditorium" className={`form-input ${errors.venue ? 'form-input--error' : ''}`} />
+            <CustomVenuePicker
+              value={form.venue}
+              options={VENUE_LIST}
+              onChange={handleVenueChange}
+              error={errors.venue}
+            />
             {errors.venue && <p className="form-error">{errors.venue}</p>}
           </div>
+
+          {/* Venue Directions */}
+          {form.venue && (
+            <div className="form-group">
+              <div className="form-label-row">
+                <label className="form-label">Venue Directions</label>
+                <button
+                  type="button"
+                  className="form-copy-btn"
+                  onClick={handleCopyDefault}
+                  title="Reset to default directions"
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                  Reset default
+                </button>
+              </div>
+              <textarea
+                name="venueDirections"
+                value={form.venueDirections}
+                onChange={handleChange}
+                placeholder="Directions to reach this venue..."
+                className="form-textarea"
+                rows={3}
+              />
+              <p className="form-hint">These directions will be shown to students. Edit as needed or use the default.</p>
+            </div>
+          )}
 
           <div className="form-group">
             <label className="form-label">Date *</label>

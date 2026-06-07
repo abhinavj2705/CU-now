@@ -5,7 +5,9 @@ import { useState, useEffect } from 'react'
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
 import { db } from '../../firebase'
 import { formatTime } from '../../utils/formatters'
+import { getVenueByName } from '../../data/venues'
 import Navbar from '../../components/Navbar'
+import VenueDirections from '../../components/VenueDirections'
 import './Schedule.css'
 
 const DAY_LABELS = ['Day 1 · Mon', 'Day 2 · Tue', 'Day 3 · Wed', 'Day 4 · Thu', 'Day 5 · Fri', 'Day 6 · Sat']
@@ -15,6 +17,7 @@ export default function Schedule() {
   const [loading, setLoading] = useState(true)
   const [selectedDay, setSelectedDay] = useState(1)
   const [expandedId, setExpandedId] = useState(null)
+  const [venueModal, setVenueModal] = useState(null) // { venue, directions }
 
   useEffect(() => {
     const q = query(collection(db, 'events'), orderBy('startTime', 'asc'))
@@ -154,6 +157,26 @@ export default function Schedule() {
                           {formatTime(event.startTime)} – {formatTime(event.endTime)}
                         </p>
                       </div>
+                      {/* Get Directions button */}
+                      {(() => {
+                        const venueData = getVenueByName(event.venue)
+                        if (!venueData) return null
+                        return (
+                          <button
+                            className="schedule-directions-btn"
+                            onClick={e => {
+                              e.stopPropagation()
+                              setVenueModal({ venue: venueData, directions: event.venueDirections || '' })
+                            }}
+                          >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+                              <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            Get Directions
+                          </button>
+                        )
+                      })()}
                     </div>
 
                     {/* Expand indicator */}
@@ -175,6 +198,15 @@ export default function Schedule() {
           </div>
         )}
       </div>
+
+      {/* Venue Directions Modal */}
+      {venueModal && (
+        <VenueDirections
+          venue={venueModal.venue}
+          directions={venueModal.directions}
+          onClose={() => setVenueModal(null)}
+        />
+      )}
 
       <Navbar />
     </div>
