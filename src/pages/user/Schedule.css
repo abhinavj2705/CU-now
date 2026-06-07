@@ -43,13 +43,21 @@
 .day-selector {
   max-width: 480px;
   margin: 0 auto;
-  padding: 8px 16px 4px;
+  padding: 8px 0 4px;
 }
 
 .day-selector__scroll {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  display: flex;
   gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  padding: 0 16px;
+  scrollbar-width: none;
+}
+
+.day-selector__scroll::-webkit-scrollbar {
+  display: none;
 }
 
 .day-pill {
@@ -57,7 +65,7 @@
   align-items: center;
   justify-content: center;
   gap: 4px;
-  padding: 8px 4px;
+  padding: 8px 12px;
   border-radius: 8px;
   border: 1px solid var(--color-bg-border);
   background: var(--color-bg-card);
@@ -67,6 +75,8 @@
   color: var(--color-text-secondary);
   cursor: pointer;
   white-space: nowrap;
+  flex-shrink: 0;
+  scroll-snap-align: start;
   transition: all 150ms ease;
   -webkit-tap-highlight-color: transparent;
 }
