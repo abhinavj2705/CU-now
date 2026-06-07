@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { collection, query, orderBy, onSnapshot, doc, deleteDoc } from 'firebase/firestore'
+import { collection, query, orderBy, onSnapshot, doc, deleteDoc, updateDoc, where, serverTimestamp } from 'firebase/firestore'
 import { db } from '../../firebase'
 import { formatTime } from '../../utils/formatters'
 import Navbar from '../../components/Navbar'
@@ -16,6 +16,7 @@ export default function AdminDashboard() {
   const navigate = useNavigate()
   const [events, setEvents] = useState([])
   const [announcements, setAnnouncements] = useState([])
+  const [pendingAdmins, setPendingAdmins] = useState([])
   const [loading, setLoading] = useState(true)
   const [deleteTarget, setDeleteTarget] = useState(null)
 
@@ -29,7 +30,12 @@ export default function AdminDashboard() {
     const unsub2 = onSnapshot(q2, snap => {
       setAnnouncements(snap.docs.map(d => ({ id: d.id, ...d.data() })))
     })
-    return () => { unsub1(); unsub2() }
+    // Listen for pending admin requests
+    const q3 = query(collection(db, 'users'), where('adminStatus', '==', 'pending'))
+    const unsub3 = onSnapshot(q3, snap => {
+      setPendingAdmins(snap.docs.map(d => ({ id: d.id, ...d.data() })))
+    })
+    return () => { unsub1(); unsub2(); unsub3() }
   }, [])
 
   async function handleDelete() {
@@ -40,6 +46,31 @@ export default function AdminDashboard() {
       console.error(err)
     }
     setDeleteTarget(null)
+  }
+
+  async function handleApproveAdmin(userId) {
+    try {
+      await updateDoc(doc(db, 'users', userId), {
+        role: 'admin',
+        adminStatus: 'approved',
+        onboarded: true,
+        approvedAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      })
+    } catch (err) {
+      console.error('Failed to approve admin:', err)
+    }
+  }
+
+  async function handleRejectAdmin(userId) {
+    try {
+      await updateDoc(doc(db, 'users', userId), {
+        adminStatus: 'rejected',
+        updatedAt: serverTimestamp(),
+      })
+    } catch (err) {
+      console.error('Failed to reject admin:', err)
+    }
   }
 
   const totalEvents = events.length
@@ -71,6 +102,60 @@ export default function AdminDashboard() {
             Announcement
           </button>
         </div>
+
+        {/* ===== PENDING ADMIN REQUESTS ===== */}
+        {pendingAdmins.length > 0 && (
+          <div className="admin-approval-section">
+            <div className="admin-approval-header">
+              <span className="admin-approval-badge">{pendingAdmins.length}</span>
+              <h3 className="admin-approval-title">Pending Admin Requests</h3>
+            </div>
+            <div className="admin-approval-list">
+              {pendingAdmins.map(req => (
+                <div key={req.id} className="admin-approval-card">
+                  <div className="admin-approval-card__info">
+                    <div className="admin-approval-card__avatar">
+                      {req.photoURL ? (
+                        <img src={req.photoURL} alt="" className="admin-approval-card__photo" />
+                      ) : (
+                        <span className="admin-approval-card__initial">{(req.name || req.email || '?').charAt(0).toUpperCase()}</span>
+                      )}
+                    </div>
+                    <div className="admin-approval-card__details">
+                      <p className="admin-approval-card__name">{req.name || 'Unknown'}</p>
+                      <p className="admin-approval-card__email">{req.email}</p>
+                      {req.designation && (
+                        <p className="admin-approval-card__meta">
+                          <strong>Role:</strong> {req.designation}
+                          {req.organization && ` · ${req.organization}`}
+                        </p>
+                      )}
+                      {req.adminRequestReason && (
+                        <p className="admin-approval-card__reason">
+                          "{req.adminRequestReason}"
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="admin-approval-card__actions">
+                    <button
+                      className="admin-approval-btn admin-approval-btn--approve"
+                      onClick={() => handleApproveAdmin(req.id)}
+                    >
+                      ✓ Approve
+                    </button>
+                    <button
+                      className="admin-approval-btn admin-approval-btn--reject"
+                      onClick={() => handleRejectAdmin(req.id)}
+                    >
+                      ✕ Reject
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Stats */}
         <div className="admin-stats">
