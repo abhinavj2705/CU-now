@@ -39,12 +39,12 @@ const VENUES = [
 
   // ─── Individual Blocks ───
   {
-    id: 'first-block',
-    name: '1st Block',
-    block: '1st Block',
+    id: 'block-1-audi',
+    name: 'Block 1 Audi',
+    block: 'Block 1',
     image: '/venues/first_block.jpg',
     defaultDirections:
-      'From the Main Gate, take the main road that runs through campus. The 1st Block is the first major building on your left side. Look for the signboard near the entrance.',
+      'From the Main Gate, take the main road that runs through campus. Block 1 is the first major building on your left side. The Auditorium is located inside.',
   },
   {
     id: 'pu-block',
