@@ -1,5 +1,6 @@
 // src/pages/admin/ManageGroups.jsx
 // Admin page to view/remap section-to-group assignments
+// Touch-friendly: each section shows 3 tappable group buttons
 
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -20,7 +21,6 @@ export default function ManageGroups() {
   const [localConfig, setLocalConfig] = useState(null)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
-  const [dragSection, setDragSection] = useState(null)
 
   // Initialize local config from live config
   useEffect(() => {
@@ -43,11 +43,11 @@ export default function ManageGroups() {
     return null
   }
 
-  // Move a section from one group to another
-  function moveSection(section, toGroup) {
+  // Assign a section to a group
+  function assignSection(section, toGroup) {
     setLocalConfig(prev => {
       const next = JSON.parse(JSON.stringify(prev))
-      // Remove from current group
+      // Remove from all groups first
       for (const config of Object.values(next)) {
         config.sections = config.sections.filter(s => s !== section)
       }
@@ -61,10 +61,6 @@ export default function ManageGroups() {
     setSaved(false)
   }
 
-  // Unassigned sections
-  const assignedSections = Object.values(localConfig).flatMap(g => g.sections)
-  const unassigned = ALL_SECTION_LETTERS.filter(s => !assignedSections.includes(s))
-
   // Save to Firestore
   async function handleSave() {
     setSaving(true)
@@ -74,9 +70,10 @@ export default function ManageGroups() {
         updatedAt: serverTimestamp(),
       })
       setSaved(true)
-      setTimeout(() => setSaved(false), 2000)
+      setTimeout(() => setSaved(false), 3000)
     } catch (err) {
       console.error('Failed to save group config:', err)
+      alert('Failed to save. Check console for details.')
     } finally {
       setSaving(false)
     }
@@ -91,6 +88,14 @@ export default function ManageGroups() {
   // Check if config changed
   const hasChanges = JSON.stringify(localConfig) !== JSON.stringify(groupConfig)
 
+  // Group summaries
+  const groupSummaries = Object.entries(localConfig).map(([num, config]) => ({
+    num: parseInt(num),
+    label: config.label,
+    count: config.sections.length,
+    sections: config.sections.join(', ') || 'None',
+  }))
+
   return (
     <div className="admin-page">
       <div className="admin-header">
@@ -101,107 +106,55 @@ export default function ManageGroups() {
       </div>
 
       <div className="admin-content">
-        <p className="manage-groups-desc">
-          Drag and drop sections between groups, or tap a section to move it.
-          Changes are saved to Firestore and apply app-wide immediately.
-        </p>
+        {/* Group summary cards */}
+        <div className="mg-summary-row">
+          {groupSummaries.map(g => (
+            <div key={g.num} className="mg-summary-card">
+              <span className={`mg-summary-dot mg-summary-dot--g${g.num}`} />
+              <div className="mg-summary-info">
+                <span className="mg-summary-label">{g.label}</span>
+                <span className="mg-summary-sections">{g.sections}</span>
+              </div>
+              <span className="mg-summary-count">{g.count}</span>
+            </div>
+          ))}
+        </div>
 
-        {/* Group cards */}
-        {Object.entries(localConfig).map(([groupNum, config]) => (
-          <div
-            key={groupNum}
-            className="group-card"
-            onDragOver={(e) => e.preventDefault()}
-            onDrop={(e) => {
-              e.preventDefault()
-              if (dragSection) {
-                moveSection(dragSection, groupNum)
-                setDragSection(null)
-              }
-            }}
-          >
-            <div className="group-card__header">
-              <h3 className="group-card__title">{config.label}</h3>
-              <span className="group-card__count">{config.sections.length} sections</span>
-            </div>
-            <div className="group-card__sections">
-              {config.sections.length === 0 ? (
-                <p className="group-card__empty">No sections assigned</p>
-              ) : (
-                config.sections.map(section => (
-                  <button
-                    key={section}
-                    className="section-chip"
-                    draggable
-                    onDragStart={() => setDragSection(section)}
-                    onDragEnd={() => setDragSection(null)}
-                    title={`Move section ${section}`}
-                  >
-                    {section}
-                    <span className="section-chip__actions">
-                      {Object.keys(localConfig)
-                        .filter(g => g !== groupNum)
-                        .map(targetGroup => (
-                          <span
-                            key={targetGroup}
-                            className="section-chip__move"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              moveSection(section, targetGroup)
-                            }}
-                            title={`Move to ${localConfig[targetGroup].label}`}
-                          >
-                            →G{targetGroup}
-                          </span>
-                        ))}
-                    </span>
-                  </button>
-                ))
-              )}
-            </div>
+        {/* Section assignment list */}
+        <div className="mg-section-list">
+          <div className="mg-section-list__header">
+            <span className="mg-section-list__col">Section</span>
+            <span className="mg-section-list__col mg-section-list__col--groups">
+              <span className="mg-group-col-label">G1</span>
+              <span className="mg-group-col-label">G2</span>
+              <span className="mg-group-col-label">G3</span>
+            </span>
           </div>
-        ))}
 
-        {/* Unassigned sections */}
-        {unassigned.length > 0 && (
-          <div className="group-card group-card--unassigned">
-            <div className="group-card__header">
-              <h3 className="group-card__title">Unassigned</h3>
-              <span className="group-card__count">{unassigned.length} sections</span>
-            </div>
-            <div className="group-card__sections">
-              {unassigned.map(section => (
-                <button
-                  key={section}
-                  className="section-chip section-chip--unassigned"
-                  draggable
-                  onDragStart={() => setDragSection(section)}
-                  onDragEnd={() => setDragSection(null)}
-                >
-                  {section}
-                  <span className="section-chip__actions">
-                    {Object.keys(localConfig).map(targetGroup => (
-                      <span
-                        key={targetGroup}
-                        className="section-chip__move"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          moveSection(section, targetGroup)
-                        }}
-                        title={`Assign to ${localConfig[targetGroup].label}`}
-                      >
-                        →G{targetGroup}
-                      </span>
-                    ))}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+          {ALL_SECTION_LETTERS.map(section => {
+            const currentGroup = findGroupForSection(section)
+            return (
+              <div key={section} className="mg-section-row">
+                <span className="mg-section-letter">{section}</span>
+                <div className="mg-group-btns">
+                  {[1, 2, 3].map(g => (
+                    <button
+                      key={g}
+                      type="button"
+                      className={`mg-group-btn mg-group-btn--g${g} ${currentGroup === g ? 'mg-group-btn--active' : ''}`}
+                      onClick={() => assignSection(section, g)}
+                    >
+                      {currentGroup === g ? '●' : '○'}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
+        </div>
 
         {/* Actions */}
-        <div className="manage-groups-actions">
+        <div className="mg-actions">
           <button
             className="admin-submit-btn"
             disabled={saving || !hasChanges}
@@ -211,13 +164,15 @@ export default function ManageGroups() {
               <><div className="spinner spinner--small" /> Saving...</>
             ) : saved ? (
               '✓ Saved!'
-            ) : (
+            ) : hasChanges ? (
               'Save Changes'
+            ) : (
+              'No Changes'
             )}
           </button>
           <button
-            className="admin-back-btn"
-            style={{ marginTop: 8 }}
+            type="button"
+            className="mg-reset-btn"
             onClick={handleReset}
           >
             Reset to Defaults

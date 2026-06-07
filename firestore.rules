@@ -52,5 +52,17 @@ service cloud.firestore {
       // Only admins can manage announcements
       allow create, update, delete: if isAdmin();
     }
+
+    // ---- App Config (group mappings, etc.) ----
+    match /appConfig/{configId} {
+      // All authenticated users can read config (needed for group filtering)
+      allow read: if isAuthenticated();
+
+      // Only admins can create or update config
+      allow create, update: if isAdmin();
+
+      // Only admins can delete config
+      allow delete: if isAdmin();
+    }
   }
 }
