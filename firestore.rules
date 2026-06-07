@@ -18,18 +18,17 @@ service cloud.firestore {
       return isAuthenticated() && request.auth.uid == userId;
     }
 
-    // ---- Users Collection ----
     match /users/{userId} {
       // Anyone authenticated can read their own profile
       // Admins can read all users
       allow read: if isOwner(userId) || isAdmin();
 
-      // Users can create their own profile on first login
-      allow create: if isOwner(userId);
+      // Users can create their own profile on first login, but cannot make themselves admin
+      allow create: if isOwner(userId) && request.resource.data.get('role', '') != 'admin';
 
-      // Users can update their own profile
+      // Users can update their own profile, but cannot change their role
       // Admins can update any user (e.g., to approve admin requests)
-      allow update: if isOwner(userId) || isAdmin();
+      allow update: if isAdmin() || (isOwner(userId) && request.resource.data.get('role', '') == resource.data.get('role', ''));
 
       // Only admins can delete users
       allow delete: if isAdmin();
