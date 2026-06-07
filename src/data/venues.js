@@ -71,6 +71,14 @@ const VENUES = [
       'From the Main Gate, walk along the main road. The 2nd Block is the second building on your left, near the open auditorium. The ECE Lab is inside the 2nd Block.',
   },
   {
+    id: 'block-3-audi',
+    name: 'Block 3 Audi',
+    block: '3rd Block',
+    image: '/venues/third_block.jpg',
+    defaultDirections:
+      'From the Main Gate, walk along the main road. Pass the 1st and 2nd Blocks on your left. The 3rd Block is next. The Auditorium is located inside.',
+  },
+  {
     id: 'eee-lab',
     name: 'EEE Lab',
     block: '3rd Block',
