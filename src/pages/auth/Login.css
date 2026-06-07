@@ -536,30 +536,53 @@
 
 /* ---- ERROR ---- */
 .login-error {
-  font-size: 12px;
-  color: #DC2626;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 12px;
-  padding: 8px 16px;
-  border-radius: 10px;
-  background: rgba(220, 38, 38, 0.06);
-  border: 1px solid rgba(220, 38, 38, 0.12);
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(220, 38, 38, 0.4);
+  border: 1.5px solid rgba(220, 38, 38, 0.6);
+}
+
+.login-error__icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.login-error__text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #B91C1C;
+  line-height: 1.4;
+  text-align: left;
 }
 
 .dark .login-error {
-  color: #F87171;
-  background: rgba(248, 113, 113, 0.08);
-  border: 1px solid rgba(248, 113, 113, 0.15);
+  background: rgba(220, 38, 38, 0.5);
+  border: 1.5px solid rgba(248, 113, 113, 0.6);
+}
+
+.dark .login-error__text {
+  color: #FCA5A5;
 }
 
 /* ---- FOOTER ---- */
 .login-footer {
-  font-size: 10px;
-  font-weight: 400;
-  color: var(--login-text-muted);
+  font-family: 'Outfit', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
   text-align: center;
   margin-top: auto;
-  padding-top: 4px;
+  padding-top: 8px;
+  letter-spacing: 0.01em;
+}
+
+.dark .login-footer {
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* ---- SPINNER ---- */

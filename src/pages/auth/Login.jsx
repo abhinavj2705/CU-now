@@ -351,7 +351,10 @@ export default function Login() {
 
         {/* ---- ERROR MESSAGE ---- */}
         {error && (
-          <p className="login-error login-animate-in">{error}</p>
+          <div className="login-error login-animate-in">
+            <span className="login-error__icon">⚠️</span>
+            <p className="login-error__text">{error}</p>
+          </div>
         )}
 
         {/* ---- SECURITY BADGE ---- */}
@@ -364,7 +367,7 @@ export default function Login() {
 
         {/* ---- FOOTER ---- */}
         <p className="login-footer login-animate-in login-animate-in--footer">
-          Developers Society · Christ University
+          By, The Developers Society of Christ University
         </p>
 
       </div>
