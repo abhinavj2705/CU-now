@@ -11,7 +11,7 @@ import Navbar from '../../components/Navbar'
 import CustomDayPicker from '../../components/CustomDayPicker'
 import CustomDatePicker from '../../components/CustomDatePicker'
 import CustomTimePicker from '../../components/CustomTimePicker'
-import CustomVenuePicker from '../../components/CustomVenuePicker'
+import CustomSelect from '../../components/CustomSelect'
 import './Admin.css'
 
 export default function CreateEvent() {
@@ -132,11 +132,12 @@ export default function CreateEvent() {
           {/* Venue — Custom Dropdown */}
           <div className="form-group">
             <label className="form-label">Venue *</label>
-            <CustomVenuePicker
+            <CustomSelect
               value={form.venue}
-              options={VENUE_LIST}
+              options={VENUE_LIST.map(v => ({ label: v, value: v }))}
               onChange={handleVenueChange}
               error={errors.venue}
+              placeholder="Select a venue"
             />
             {errors.venue && <p className="form-error">{errors.venue}</p>}
           </div>
@@ -213,11 +214,15 @@ export default function CreateEvent() {
           {/* Status */}
           <div className="form-group">
             <label className="form-label">Status</label>
-            <select name="status" value={form.status} onChange={handleChange} className="form-select">
-              <option value="active">Active</option>
-              <option value="cancelled">Cancelled</option>
-              <option value="postponed">Postponed</option>
-            </select>
+            <CustomSelect
+              value={form.status}
+              options={[
+                { label: 'Active', value: 'active' },
+                { label: 'Cancelled', value: 'cancelled' },
+                { label: 'Postponed', value: 'postponed' }
+              ]}
+              onChange={(val) => handleChange({ target: { name: 'status', value: val } })}
+            />
           </div>
 
           {errors.submit && <p className="form-error">{errors.submit}</p>}

@@ -178,8 +178,8 @@
   background: var(--color-bg-card);
   border: 1px solid var(--color-bg-border);
   border-radius: var(--radius-lg);
-  padding: 14px 16px;
-  margin-bottom: 10px;
+  padding: 20px 20px;
+  margin-bottom: 16px;
   position: relative;
   animation: fadeUp 300ms cubic-bezier(0.2, 0, 0, 1) both;
 }
@@ -199,10 +199,10 @@
 
 .now-card__name {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
   color: var(--color-text-primary);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   padding-right: 50px;
 }
 
@@ -217,7 +217,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--color-text-secondary);
 }
 
@@ -251,6 +251,35 @@
 .now-card__countdown-icon {
   width: 14px;
   height: 14px;
+}
+
+.now-card__directions-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-bg-border);
+  border-radius: var(--radius);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: all 150ms ease;
+}
+
+.now-card__directions-btn:hover {
+  background: var(--color-accent-dim);
+  border-color: var(--color-accent-glow);
+  color: var(--color-accent);
+}
+
+.now-card__directions-btn:active {
+  transform: scale(0.97);
 }
 
 /* ===== NEXT CARDS ===== */

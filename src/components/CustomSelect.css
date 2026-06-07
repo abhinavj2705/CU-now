@@ -1,12 +1,12 @@
-/* src/components/CustomVenuePicker.css */
+/* src/components/CustomSelect.css */
 
-.venue-picker {
+.custom-select-container {
   position: relative;
   width: 100%;
 }
 
 /* Trigger button */
-.venue-picker__trigger {
+.custom-select__trigger {
   width: 100%;
   height: 40px;
   padding: 0 12px;
@@ -26,19 +26,19 @@
   text-align: left;
 }
 
-.venue-picker__trigger--open {
+.custom-select__trigger--open {
   border-color: var(--color-accent);
 }
 
-.venue-picker--error .venue-picker__trigger {
+.custom-select-container--error .custom-select__trigger {
   border-color: var(--color-danger);
 }
 
-.venue-picker__trigger--placeholder .venue-picker__value {
+.custom-select__trigger--placeholder .custom-select__value {
   color: var(--color-text-muted);
 }
 
-.venue-picker__value {
+.custom-select__value {
   flex: 1;
   min-width: 0;
   overflow: hidden;
@@ -46,18 +46,18 @@
   white-space: nowrap;
 }
 
-.venue-picker__chevron {
+.custom-select__chevron {
   color: var(--color-text-muted);
   flex-shrink: 0;
   transition: transform 200ms ease;
 }
 
-.venue-picker__chevron--open {
+.custom-select__chevron--open {
   transform: rotate(180deg);
 }
 
 /* Dropdown */
-.venue-picker__dropdown {
+.custom-select__dropdown {
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
@@ -70,25 +70,25 @@
   border-radius: var(--radius);
   box-shadow: var(--shadow-md);
   padding: 4px;
-  animation: venueDropIn 150ms cubic-bezier(0.2, 0, 0, 1) both;
+  animation: selectDropIn 150ms cubic-bezier(0.2, 0, 0, 1) both;
 }
 
 /* Scrollbar for dropdown */
-.venue-picker__dropdown::-webkit-scrollbar {
+.custom-select__dropdown::-webkit-scrollbar {
   width: 4px;
 }
 
-.venue-picker__dropdown::-webkit-scrollbar-track {
+.custom-select__dropdown::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.venue-picker__dropdown::-webkit-scrollbar-thumb {
+.custom-select__dropdown::-webkit-scrollbar-thumb {
   background: var(--color-bg-border);
   border-radius: 99px;
 }
 
 /* Option */
-.venue-picker__option {
+.custom-select__option {
   width: 100%;
   padding: 8px 10px;
   border: none;
@@ -106,26 +106,26 @@
   transition: background 100ms ease;
 }
 
-.venue-picker__option:hover {
+.custom-select__option:hover {
   background: var(--color-bg-elevated);
 }
 
-.venue-picker__option--active {
+.custom-select__option--active {
   background: var(--color-accent-dim);
   color: var(--color-accent);
   font-weight: 500;
 }
 
-.venue-picker__option--active:hover {
+.custom-select__option--active:hover {
   background: var(--color-accent-dim);
 }
 
-.venue-picker__option svg {
+.custom-select__option svg {
   color: var(--color-accent);
   flex-shrink: 0;
 }
 
-@keyframes venueDropIn {
+@keyframes selectDropIn {
   from { opacity: 0; transform: translateY(-4px); }
   to { opacity: 1; transform: translateY(0); }
 }

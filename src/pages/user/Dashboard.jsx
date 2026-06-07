@@ -8,7 +8,9 @@ import { db } from '../../firebase'
 import { useAuth } from '../../hooks/useAuth'
 import { useUnreadAnnouncements } from '../../hooks/useUnreadAnnouncements'
 import { formatTime, getCountdown } from '../../utils/formatters'
+import { getVenueByName } from '../../data/venues'
 import Navbar from '../../components/Navbar'
+import VenueDirections from '../../components/VenueDirections'
 import christLogo from '../../assets/christ-logo.png'
 import './Dashboard.css'
 
@@ -19,6 +21,7 @@ export default function Dashboard() {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
   const [now, setNow] = useState(new Date())
+  const [selectedVenueEvent, setSelectedVenueEvent] = useState(null)
 
   // Live clock — update every 30 seconds
   useEffect(() => {
@@ -143,6 +146,21 @@ export default function Dashboard() {
                       </svg>
                       Ends in {getCountdown(event.endTime)}
                     </div>
+                    
+                    <button 
+                      className="now-card__directions-btn" 
+                      onClick={() => setSelectedVenueEvent({
+                        venue: getVenueByName(event.venue),
+                        directions: event.venueDirections
+                      })}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+                        <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon>
+                        <line x1="9" y1="3" x2="9" y2="18"></line>
+                        <line x1="15" y1="6" x2="15" y2="21"></line>
+                      </svg>
+                      Get instructions to reach venue
+                    </button>
                   </div>
                 ))
               ) : (
@@ -205,6 +223,14 @@ export default function Dashboard() {
       </div>
 
       <Navbar />
+
+      {selectedVenueEvent && (
+        <VenueDirections 
+          venue={selectedVenueEvent.venue} 
+          directions={selectedVenueEvent.directions}
+          onClose={() => setSelectedVenueEvent(null)} 
+        />
+      )}
     </div>
   )
 }
