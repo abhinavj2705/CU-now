@@ -131,7 +131,7 @@ export default function Profile() {
           </button>
         </div>
 
-        <p className="profile-version">CU Now · v1.0.0 · Developers Society</p>
+        <p className="profile-version">By, Developers Society of Christ University</p>
       </div>
 
       <ConfirmModal

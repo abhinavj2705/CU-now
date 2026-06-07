@@ -361,7 +361,7 @@ export default function Login() {
         <a href="https://drive.google.com/file/d/1800aQog5PJE6LwwWvFE0_2mk0nEyoVIl/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="login-security login-animate-in login-animate-in--security">
           <ShieldCheckIcon className="login-security__icon" />
           <span className="login-security__text">
-            Secure platform. Your data is protected.
+            Secure platform. Click to view Privacy Policy.
           </span>
         </a>
 

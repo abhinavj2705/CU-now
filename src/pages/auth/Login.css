@@ -510,21 +510,28 @@
 .login-security {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
+  gap: 8px;
+  padding: 8px 18px;
   border-radius: 100px;
   background: var(--login-glass-light);
-  border: 1px solid var(--login-glass-border-light);
+  border: 1.5px solid var(--login-glass-border-light);
   -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
   margin-bottom: 0;
   text-decoration: none;
   cursor: pointer;
-  transition: border-color 200ms ease, background 200ms ease;
+  transition: border-color 200ms ease, background 200ms ease, transform 200ms ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .login-security:hover {
   border-color: var(--login-gold);
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-1px);
+}
+
+.dark .login-security:hover {
+  background: rgba(10, 20, 40, 0.8);
 }
 
 .login-security:hover .login-security__text {
@@ -532,16 +539,16 @@
 }
 
 .login-security__icon {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   color: var(--login-gold);
   flex-shrink: 0;
 }
 
 .login-security__text {
-  font-size: 11px;
-  font-weight: 500;
-  color: var(--login-text-secondary);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--login-text-dark);
   white-space: nowrap;
 }
 
@@ -583,9 +590,9 @@
 /* ---- FOOTER ---- */
 .login-footer {
   font-family: 'Inter', system-ui, sans-serif;
-  font-size: 12px;
-  font-weight: 500;
-  color: #374151;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
   text-align: center;
   margin-top: auto;
   padding-top: 8px;
@@ -593,7 +600,7 @@
 }
 
 .dark .login-footer {
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255, 255, 255, 0.95);
 }
 
 /* ---- SPINNER ---- */
