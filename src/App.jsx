@@ -12,6 +12,7 @@ import GroupConfigProvider from './context/GroupConfigContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminRoute from './components/AdminRoute'
 import InstallBanner from './components/InstallBanner'
+import FeedbackPopup from './components/FeedbackPopup'
 
 // Loading spinner
 function RouteFallback() {
@@ -107,6 +108,9 @@ export default function App() {
         </Routes>
         </Suspense>
         
+        {/* Global Feedback Popup */}
+        <FeedbackPopup />
+
         {/* Global PWA Install Banner */}
         <InstallBanner />
       </AuthProvider>

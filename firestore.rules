@@ -63,5 +63,16 @@ service cloud.firestore {
       // Only admins can delete config
       allow delete: if isAdmin();
     }
+
+    // ---- Feedbacks Collection ----
+    match /feedbacks/{feedbackId} {
+      // Admins can read all feedback
+      allow read: if isAdmin();
+
+      // Authenticated users can submit feedback
+      allow create: if isAuthenticated();
+      
+      allow update, delete: if isAdmin();
+    }
   }
 }
