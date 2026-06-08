@@ -1,15 +1,13 @@
 // src/pages/user/Schedule.jsx
 // Day-by-day schedule with expandable event cards
 
-import { useState, useEffect } from 'react'
-import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
-import { db } from '../../firebase'
+import { useState, useEffect, useMemo } from 'react'
 import { useAuth } from '../../hooks/useAuth'
+import { useEvents } from '../../context/EventsContext'
 import { useGroupConfig } from '../../context/GroupConfigContext'
 import { getGroupBySection } from '../../data/groups'
 import { formatTime } from '../../utils/formatters'
 import { getVenueByName } from '../../data/venues'
-import Navbar from '../../components/Navbar'
 import VenueDirections from '../../components/VenueDirections'
 import './Schedule.css'
 
@@ -18,20 +16,10 @@ const DAY_LABELS = ['Day 1 · Mon', 'Day 2 · Tue', 'Day 3 · Wed', 'Day 4 · Th
 export default function Schedule() {
   const { profile, isAdmin } = useAuth()
   const { groupConfig } = useGroupConfig()
-  const [events, setEvents] = useState([])
-  const [loading, setLoading] = useState(true)
+  const { events, loading } = useEvents()
   const [selectedDay, setSelectedDay] = useState(1)
   const [expandedId, setExpandedId] = useState(null)
   const [venueModal, setVenueModal] = useState(null) // { venue, directions }
-
-  useEffect(() => {
-    const q = query(collection(db, 'events'), orderBy('startTime', 'asc'))
-    const unsub = onSnapshot(q, (snap) => {
-      setEvents(snap.docs.map(doc => ({ id: doc.id, ...doc.data() })))
-      setLoading(false)
-    })
-    return unsub
-  }, [])
 
   // Auto-select today's day based on orientation start
   useEffect(() => {
@@ -43,14 +31,18 @@ export default function Schedule() {
   }, [])
 
   // Determine current user's group
-  const userGroup = profile?.group || getGroupBySection(profile?.section, groupConfig)
+  const userGroup = useMemo(() => {
+    return profile?.group || getGroupBySection(profile?.section, groupConfig)
+  }, [profile?.group, profile?.section, groupConfig])
 
-  const dayEvents = events.filter(e => {
-    if (e.dayNumber !== selectedDay || e.status !== 'active') return false
-    if (isAdmin) return true
-    if (!e.targetGroup || e.targetGroup === 'all') return true
-    return e.targetGroup === userGroup
-  })
+  const dayEvents = useMemo(() => {
+    return events.filter(e => {
+      if (e.dayNumber !== selectedDay || e.status !== 'active') return false
+      if (isAdmin) return true
+      if (!e.targetGroup || e.targetGroup === 'all') return true
+      return e.targetGroup === userGroup
+    })
+  }, [events, selectedDay, isAdmin, userGroup])
 
   function toggleExpand(id) {
     setExpandedId(prev => prev === id ? null : id)
@@ -212,7 +204,6 @@ export default function Schedule() {
         )}
       </div>
 
-      {/* Venue Directions Modal */}
       {venueModal && (
         <VenueDirections
           venue={venueModal.venue}
@@ -220,10 +211,6 @@ export default function Schedule() {
           onClose={() => setVenueModal(null)}
         />
       )}
-
-      <div style={{ flexShrink: 0 }}>
-        <Navbar />
-      </div>
     </div>
   )
 }

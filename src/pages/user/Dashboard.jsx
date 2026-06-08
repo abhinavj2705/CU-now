@@ -1,17 +1,15 @@
 // src/pages/user/Dashboard.jsx
 // Home dashboard — "Happening Now" + "Up Next" sections
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
-import { db } from '../../firebase'
 import { useAuth } from '../../hooks/useAuth'
+import { useEvents } from '../../context/EventsContext'
 import { useGroupConfig } from '../../context/GroupConfigContext'
 import { getGroupBySection } from '../../data/groups'
 import { useUnreadAnnouncements } from '../../hooks/useUnreadAnnouncements'
 import { formatTime, getCountdown } from '../../utils/formatters'
 import { getVenueByName } from '../../data/venues'
-import Navbar from '../../components/Navbar'
 import VenueDirections from '../../components/VenueDirections'
 import christLogo from '../../assets/christ-logo.png'
 import './Dashboard.css'
@@ -21,8 +19,7 @@ export default function Dashboard() {
   const { user, profile, isAdmin } = useAuth()
   const { groupConfig } = useGroupConfig()
   const { hasUnread } = useUnreadAnnouncements()
-  const [events, setEvents] = useState([])
-  const [loading, setLoading] = useState(true)
+  const { events, loading } = useEvents()
   const [now, setNow] = useState(new Date())
   const [selectedVenueEvent, setSelectedVenueEvent] = useState(null)
 
@@ -32,41 +29,38 @@ export default function Dashboard() {
     return () => clearInterval(timer)
   }, [])
 
-  // Listen to events collection
-  useEffect(() => {
-    const q = query(collection(db, 'events'), orderBy('startTime', 'asc'))
-    const unsub = onSnapshot(q, (snap) => {
-      const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-      setEvents(data)
-      setLoading(false)
-    })
-    return unsub
-  }, [])
-
   // Determine current user's group
-  const userGroup = profile?.group || getGroupBySection(profile?.section, groupConfig)
+  const userGroup = useMemo(() => {
+    return profile?.group || getGroupBySection(profile?.section, groupConfig)
+  }, [profile?.group, profile?.section, groupConfig])
 
   // Determine current, upcoming events — filtered by group
-  const activeEvents = events.filter(e => {
-    if (e.status !== 'active') return false
-    // Admins see everything
-    if (isAdmin) return true
-    // No targetGroup or 'all' → visible to everyone
-    if (!e.targetGroup || e.targetGroup === 'all') return true
-    // Match user's group
-    return e.targetGroup === userGroup
-  })
+  const activeEvents = useMemo(() => {
+    return events.filter(e => {
+      if (e.status !== 'active') return false
+      // Admins see everything
+      if (isAdmin) return true
+      // No targetGroup or 'all' → visible to everyone
+      if (!e.targetGroup || e.targetGroup === 'all') return true
+      // Match user's group
+      return e.targetGroup === userGroup
+    })
+  }, [events, isAdmin, userGroup])
 
-  const happeningNow = activeEvents.filter(e => {
-    const start = e.startTime?.toDate ? e.startTime.toDate() : new Date(e.startTime)
-    const end = e.endTime?.toDate ? e.endTime.toDate() : new Date(e.endTime)
-    return now >= start && now <= end
-  })
+  const happeningNow = useMemo(() => {
+    return activeEvents.filter(e => {
+      const start = e.startTime?.toDate ? e.startTime.toDate() : new Date(e.startTime)
+      const end = e.endTime?.toDate ? e.endTime.toDate() : new Date(e.endTime)
+      return now >= start && now <= end
+    })
+  }, [activeEvents, now])
 
-  const upNext = activeEvents.filter(e => {
-    const start = e.startTime?.toDate ? e.startTime.toDate() : new Date(e.startTime)
-    return start > now
-  }).slice(0, 3)
+  const upNext = useMemo(() => {
+    return activeEvents.filter(e => {
+      const start = e.startTime?.toDate ? e.startTime.toDate() : new Date(e.startTime)
+      return start > now
+    }).slice(0, 3)
+  }, [activeEvents, now])
 
   const firstName = user?.displayName?.split(' ')[0] || 'there'
 
@@ -248,10 +242,6 @@ export default function Dashboard() {
             </button>
           </>
         )}
-      </div>
-
-      <div style={{ flexShrink: 0 }}>
-        <Navbar />
       </div>
 
       {selectedVenueEvent && (

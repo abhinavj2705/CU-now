@@ -7,7 +7,6 @@ import { useAuth } from '../../hooks/useAuth'
 import { useGroupConfig } from '../../context/GroupConfigContext'
 import { getGroupBySection, getGroupLabel } from '../../data/groups'
 import { useTheme } from '../../context/ThemeContext'
-import Navbar from '../../components/Navbar'
 import ConfirmModal from '../../components/ConfirmModal'
 import './Profile.css'
 
@@ -152,9 +151,6 @@ export default function Profile() {
         onCancel={() => setShowLogoutModal(false)}
       />
 
-      <div style={{ flexShrink: 0 }}>
-        <Navbar />
-      </div>
     </div>
   )
 }
