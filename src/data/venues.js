@@ -102,6 +102,14 @@ const VENUES = [
     defaultDirections:
       'From the Main Gate, walk along the main road towards the far end of campus. The 6th Block is one of the last buildings. The Civil Lab is located inside.',
   },
+  {
+    id: 'open-audi',
+    name: 'Open Audi',
+    block: 'Open Auditorium',
+    image: '/venues/open_audi.png',
+    defaultDirections:
+      'From the Main Gate, walk along the main road. The Open Auditorium is located near the 2nd Block on the left side of the campus.',
+  },
 ]
 
 /**
