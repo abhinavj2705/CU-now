@@ -82,8 +82,16 @@ export default function AdminFeedbacks() {
         ) : (
           <div className="admin-event-list">
             {feedbacks.map(f => (
-              <div key={f.id} className="admin-event-card" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <div className="admin-event-info">
+              <div key={f.id} style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                background: 'var(--color-bg-card)',
+                border: '1px solid var(--color-bg-border)',
+                borderRadius: 'var(--radius)',
+                padding: '16px',
+                gap: '8px'
+              }}>
+                <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flex: 1, minWidth: 0, paddingRight: '16px' }}>
                       {f.photoURL ? (
@@ -100,11 +108,11 @@ export default function AdminFeedbacks() {
                     </div>
                     
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px', flexShrink: 0 }}>
-                      <span className="admin-event-group-badge" style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                      <span className="admin-event-group-badge" style={{ display: 'flex', gap: '6px', alignItems: 'center', margin: 0 }}>
                         <span>UI/UX:</span>
                         <span style={{ color: 'var(--color-accent)' }}>{f.uiRating ? '★'.repeat(f.uiRating) : 'None'}</span>
                       </span>
-                      <span className="admin-event-group-badge" style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                      <span className="admin-event-group-badge" style={{ display: 'flex', gap: '6px', alignItems: 'center', margin: 0 }}>
                         <span>Helpful:</span>
                         <span style={{ color: 'var(--color-accent)' }}>{f.helpRating ? '★'.repeat(f.helpRating) : 'None'}</span>
                       </span>
@@ -112,7 +120,7 @@ export default function AdminFeedbacks() {
                   </div>
 
                   <div style={{ marginTop: '16px', padding: '12px', backgroundColor: 'var(--color-bg-body)', borderRadius: '8px', border: '1px solid var(--color-bg-border)' }}>
-                    <p style={{ margin: 0, color: 'var(--color-text-primary)', fontSize: '0.95rem', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>
+                    <p style={{ margin: 0, color: 'var(--color-text-primary)', fontSize: '0.95rem', lineHeight: '1.5', whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
                       {f.comment || <span style={{ color: 'var(--color-text-secondary)', fontStyle: 'italic' }}>No comment provided</span>}
                     </p>
                   </div>
