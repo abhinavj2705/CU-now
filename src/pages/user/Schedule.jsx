@@ -21,6 +21,7 @@ export default function Schedule() {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
   const [selectedDay, setSelectedDay] = useState(1)
+  const [currentDay, setCurrentDay] = useState(1)
   const [expandedId, setExpandedId] = useState(null)
   const [venueModal, setVenueModal] = useState(null) // { venue, directions }
 
@@ -39,6 +40,7 @@ export default function Schedule() {
     const dayOfWeek = now.getDay() // 0=Sun, 1=Mon ... 6=Sat
     if (dayOfWeek >= 1 && dayOfWeek <= 6) {
       setSelectedDay(dayOfWeek) // Mon=1, Tue=2... Sat=6
+      setCurrentDay(dayOfWeek)
     }
   }, [])
 
@@ -103,6 +105,14 @@ export default function Schedule() {
             {[1, 2, 3, 4].map(i => (
               <div key={i} className="skeleton-card" />
             ))}
+          </div>
+        ) : selectedDay < currentDay ? (
+          <div className="schedule-empty">
+            <span className="schedule-empty__icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            </span>
+            <p className="schedule-empty__text">No schedule for the day</p>
+            <p className="schedule-empty__sub">This day's schedule has already passed.</p>
           </div>
         ) : dayEvents.length === 0 ? (
           <div className="schedule-empty">
