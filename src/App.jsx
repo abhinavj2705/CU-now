@@ -8,6 +8,7 @@ import AuthProvider from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import GroupConfigProvider from './context/GroupConfigContext'
 import EventsProvider from './context/EventsContext'
+import { Analytics } from '@vercel/analytics/react'
 
 // Route guards
 import ProtectedRoute from './components/ProtectedRoute'
@@ -122,6 +123,7 @@ export default function App() {
       </AuthProvider>
       </GroupConfigProvider>
     </BrowserRouter>
+    <Analytics />
     </ThemeProvider>
   )
 }
