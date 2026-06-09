@@ -43,6 +43,7 @@ const CreateEvent = lazy(() => import('./pages/admin/CreateEvent'))
 const EditEvent = lazy(() => import('./pages/admin/EditEvent'))
 const CreateAnnouncement = lazy(() => import('./pages/admin/CreateAnnouncement'))
 const ManageGroups = lazy(() => import('./pages/admin/ManageGroups'))
+const AdminFeedbacks = lazy(() => import('./pages/admin/AdminFeedbacks'))
 
 export default function App() {
   return (
@@ -106,6 +107,9 @@ export default function App() {
           } />
           <Route path="/admin/manage-groups" element={
             <AdminRoute><ManageGroups /></AdminRoute>
+          } />
+          <Route path="/admin/feedbacks" element={
+            <AdminRoute><AdminFeedbacks /></AdminRoute>
           } />
 
           {/* Default redirect */}
