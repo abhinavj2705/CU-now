@@ -104,7 +104,7 @@ export default function About() {
                 onClick={() => setExpandedBlock(isExpanded ? null : block.name)}
               >
                 <div className="block-card__image-wrapper">
-                  <img src={block.image} alt={block.name} className="block-card__image" />
+                  <img src={block.image} alt={block.name} className="block-card__image" loading="lazy" />
                   <div className="block-card__image-overlay">
                     <h2 className="block-card__title">{block.name}</h2>
                     <svg className={`block-card__chevron ${isExpanded ? 'open' : ''}`} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
