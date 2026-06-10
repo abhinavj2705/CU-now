@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react'
 import { collection, query, orderBy, onSnapshot } from 'firebase/firestore'
 import { db } from '../../firebase'
 import { timeAgo } from '../../utils/formatters'
-import Navbar from '../../components/Navbar'
 import './Announcements.css'
 
 const URGENCY_CONFIG = {
@@ -91,9 +90,6 @@ export default function Announcements() {
         )}
       </div>
 
-      <div style={{ flexShrink: 0 }}>
-        <Navbar />
-      </div>
     </div>
   )
 }

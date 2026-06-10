@@ -7,12 +7,15 @@ import { Toaster } from 'react-hot-toast'
 import AuthProvider from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import GroupConfigProvider from './context/GroupConfigContext'
+import EventsProvider from './context/EventsContext'
+import { Analytics } from '@vercel/analytics/react'
 
 // Route guards
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminRoute from './components/AdminRoute'
 import InstallBanner from './components/InstallBanner'
 import FeedbackPopup from './components/FeedbackPopup'
+import Layout from './components/Layout'
 
 // Loading spinner
 function RouteFallback() {
@@ -41,6 +44,7 @@ const CreateEvent = lazy(() => import('./pages/admin/CreateEvent'))
 const EditEvent = lazy(() => import('./pages/admin/EditEvent'))
 const CreateAnnouncement = lazy(() => import('./pages/admin/CreateAnnouncement'))
 const ManageGroups = lazy(() => import('./pages/admin/ManageGroups'))
+const AdminFeedbacks = lazy(() => import('./pages/admin/AdminFeedbacks'))
 
 export default function App() {
   return (
@@ -48,6 +52,7 @@ export default function App() {
     <BrowserRouter>
       <GroupConfigProvider>
       <AuthProvider>
+        <EventsProvider>
         {/* Global toast notifications */}
         <Toaster
           position="bottom-center"
@@ -72,22 +77,24 @@ export default function App() {
           <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/admin-onboarding" element={<AdminOnboarding />} />
 
-          {/* Protected user routes */}
-          <Route path="/dashboard" element={
-            <ProtectedRoute><Dashboard /></ProtectedRoute>
-          } />
-          <Route path="/schedule" element={
-            <ProtectedRoute><Schedule /></ProtectedRoute>
-          } />
-          <Route path="/announcements" element={
-            <ProtectedRoute><Announcements /></ProtectedRoute>
-          } />
-          <Route path="/profile" element={
-            <ProtectedRoute><Profile /></ProtectedRoute>
-          } />
-          <Route path="/about" element={
-            <ProtectedRoute><About /></ProtectedRoute>
-          } />
+          {/* Protected user routes wrapped in Layout */}
+          <Route element={<Layout />}>
+            <Route path="/dashboard" element={
+              <ProtectedRoute><Dashboard /></ProtectedRoute>
+            } />
+            <Route path="/schedule" element={
+              <ProtectedRoute><Schedule /></ProtectedRoute>
+            } />
+            <Route path="/announcements" element={
+              <ProtectedRoute><Announcements /></ProtectedRoute>
+            } />
+            <Route path="/profile" element={
+              <ProtectedRoute><Profile /></ProtectedRoute>
+            } />
+            <Route path="/about" element={
+              <ProtectedRoute><About /></ProtectedRoute>
+            } />
+          </Route>
 
           {/* Admin routes */}
           <Route path="/admin" element={
@@ -105,21 +112,26 @@ export default function App() {
           <Route path="/admin/manage-groups" element={
             <AdminRoute><ManageGroups /></AdminRoute>
           } />
+          <Route path="/admin/feedbacks" element={
+            <AdminRoute><AdminFeedbacks /></AdminRoute>
+          } />
 
           {/* Default redirect */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
         </Suspense>
-        
+
         {/* Global Feedback Popup */}
         <FeedbackPopup />
 
         {/* Global PWA Install Banner */}
         <InstallBanner />
+        </EventsProvider>
       </AuthProvider>
       </GroupConfigProvider>
     </BrowserRouter>
+    <Analytics />
     </ThemeProvider>
   )
 }
