@@ -1,0 +1,189 @@
+/* src/pages/user/About.css */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
+.about-page {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--color-bg-base-solid);
+}
+
+.about-header {
+  flex-shrink: 0;
+  z-index: 40;
+  background: var(--color-bg-card);
+  border-bottom: 1px solid var(--color-bg-border);
+  padding: 20px;
+}
+
+.about-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+}
+
+.about-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  color: var(--color-text-primary);
+}
+
+.about-header p {
+  margin: 4px 0 0 0;
+  font-size: 15px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.dark .about-header {
+  background: var(--color-bg-card);
+}
+
+.blocks-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Glassmorphism Card Design */
+.block-card {
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-bg-border);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.block-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+.dark .block-card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.block-card__image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.block-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.block-card:hover .block-card__image {
+  transform: scale(1.05);
+}
+
+.block-card__image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 30px 20px 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.block-card__title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 600;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.block-card__chevron {
+  color: #ffffff;
+  transition: transform 0.3s ease;
+  opacity: 0.8;
+}
+
+.block-card__chevron.open {
+  transform: rotate(180deg);
+}
+
+.block-card__expanded-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+
+.block-card__expanded-content.open {
+  max-height: 1000px;
+  opacity: 1;
+}
+
+.block-card__content {
+  padding: 20px;
+  background: linear-gradient(135deg, var(--color-bg-card) 0%, var(--color-accent-dim) 100%);
+  border-top: 1px solid var(--color-bg-border);
+}
+
+.block-card__empty {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+.block-card__subtitle {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.block-card__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.block-card__list-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.list-icon {
+  flex-shrink: 0;
+  color: var(--color-primary);
+  opacity: 0.8;
+}
+
+/* Responsive Grid for larger screens */
+@media (min-width: 768px) {
+  .blocks-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}

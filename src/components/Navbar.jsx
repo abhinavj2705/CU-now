@@ -36,6 +36,8 @@ const icons = {
   announcementsActive: `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9z"/><path d="M13.73 21a2 2 0 01-3.46 0" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>`,
   profile: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>`,
   profileActive: `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2h16z"/><circle cx="12" cy="7" r="4"/></svg>`,
+  about: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
+  aboutActive: `<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>`,
 }
 
 export default function Navbar() {
@@ -47,6 +49,7 @@ export default function Navbar() {
         <NavItem to="/dashboard" label="Home" icon={icons.home} iconActive={icons.homeActive} />
         <NavItem to="/schedule" label="Schedule" icon={icons.schedule} iconActive={icons.scheduleActive} />
         <NavItem to="/announcements" label="Updates" icon={icons.announcements} iconActive={icons.announcementsActive} hasBadge={hasUnread} />
+        <NavItem to="/about" label="About" icon={icons.about} iconActive={icons.aboutActive} />
         <NavItem to="/profile" label="Profile" icon={icons.profile} iconActive={icons.profileActive} />
       </div>
     </nav>

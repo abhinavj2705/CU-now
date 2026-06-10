@@ -36,6 +36,7 @@ const Dashboard = lazy(() => import('./pages/user/Dashboard'))
 const Schedule = lazy(() => import('./pages/user/Schedule'))
 const Announcements = lazy(() => import('./pages/user/Announcements'))
 const Profile = lazy(() => import('./pages/user/Profile'))
+const About = lazy(() => import('./pages/user/About'))
 
 // Admin pages
 const AdminDashboard = lazy(() => import('./pages/admin/AdminDashboard'))
@@ -90,6 +91,9 @@ export default function App() {
             <Route path="/profile" element={
               <ProtectedRoute><Profile /></ProtectedRoute>
             } />
+            <Route path="/about" element={
+              <ProtectedRoute><About /></ProtectedRoute>
+            } />
           </Route>
 
           {/* Admin routes */}
@@ -117,7 +121,7 @@ export default function App() {
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>
         </Suspense>
-        
+
         {/* Global Feedback Popup */}
         <FeedbackPopup />
 
