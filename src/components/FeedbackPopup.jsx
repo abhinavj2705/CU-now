@@ -27,7 +27,7 @@ const StarIcon = ({ filled, onClick, onMouseEnter, onMouseLeave }) => (
 )
 
 export default function FeedbackPopup() {
-  const { user, profile } = useAuth()
+  const { user, profile, isOnboarded } = useAuth()
   
   const [isVisible, setIsVisible] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
@@ -46,7 +46,9 @@ export default function FeedbackPopup() {
     const handleForceShow = () => setIsVisible(true)
     window.addEventListener('showFeedbackPopup', handleForceShow)
 
-    if (!user || !profile || profile.hasSubmittedFeedback) {
+    const isPendingAdmin = profile?.role === 'pending_admin' || profile?.adminStatus === 'pending' || profile?.adminStatus === 'rejected'
+
+    if (!user || !profile || profile.hasSubmittedFeedback || !isOnboarded || isPendingAdmin) {
       setIsVisible(false)
       return () => window.removeEventListener('showFeedbackPopup', handleForceShow)
     }
@@ -68,7 +70,7 @@ export default function FeedbackPopup() {
     setIsVisible(true)
 
     return () => window.removeEventListener('showFeedbackPopup', handleForceShow)
-  }, [user, profile])
+  }, [user, profile, isOnboarded])
 
   const handleSkip = async () => {
     setIsVisible(false)
@@ -92,6 +94,11 @@ export default function FeedbackPopup() {
   const handleSubmit = async () => {
     if (uiRating === 0 || helpRating === 0) {
       toast.error('Please provide both ratings before submitting.')
+      return
+    }
+
+    if (!comment.trim()) {
+      toast.error('Please provide a comment before submitting.')
       return
     }
 
@@ -166,7 +173,7 @@ export default function FeedbackPopup() {
               </div>
 
               <div className="rating-group">
-                <label>Any suggestions? (Optional)</label>
+                <label>Any suggestions? (Required)</label>
                 <textarea
                   placeholder="Tell us what we can do better..."
                   value={comment}
@@ -186,7 +193,7 @@ export default function FeedbackPopup() {
                 <button 
                   className="btn-submit" 
                   onClick={handleSubmit}
-                  disabled={isSubmitting || uiRating === 0 || helpRating === 0}
+                  disabled={isSubmitting || uiRating === 0 || helpRating === 0 || !comment.trim()}
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
                 </button>

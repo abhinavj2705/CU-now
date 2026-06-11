@@ -80,7 +80,19 @@ export default function AdminFeedbacks() {
       ].join(',')
     })
 
-    const csvContent = [headers.join(','), ...rows].join('\n')
+    const validUiRatings = feedbacks.map(f => f.uiRating).filter(r => r > 0)
+    const avgUi = validUiRatings.length ? (validUiRatings.reduce((a,b) => a+b, 0) / validUiRatings.length).toFixed(1) : 'N/A'
+    
+    const validHelpRatings = feedbacks.map(f => f.helpRating).filter(r => r > 0)
+    const avgHelp = validHelpRatings.length ? (validHelpRatings.reduce((a,b) => a+b, 0) / validHelpRatings.length).toFixed(1) : 'N/A'
+
+    const summaryRows = [
+      `"Average UI Rating","${avgUi}"`,
+      `"Average Helpful Rating","${avgHelp}"`,
+      `""` // Empty row for spacing
+    ]
+
+    const csvContent = [...summaryRows, headers.join(','), ...rows].join('\n')
     
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
