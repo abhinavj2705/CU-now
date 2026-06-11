@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { collection, query, orderBy, getDocs, where, documentId } from 'firebase/firestore'
 import { db } from '../../firebase'
 import Navbar from '../../components/Navbar'
+import { extractCleanName } from '../../utils/formatters'
 import './Admin.css'
 
 export default function AdminFeedbacks() {
@@ -42,6 +43,7 @@ export default function AdminFeedbacks() {
           ...f,
           name: f.userId && userMap[f.userId] ? userMap[f.userId].name : 'Anonymous',
           email: f.userId && userMap[f.userId] ? userMap[f.userId].email : 'No email provided',
+          regNumber: f.userId && userMap[f.userId] ? userMap[f.userId].regNumber : 'N/A',
           photoURL: f.userId && userMap[f.userId] ? userMap[f.userId].photoURL : null
         }))
 
@@ -56,6 +58,41 @@ export default function AdminFeedbacks() {
     fetchFeedbacks()
   }, [])
 
+  const downloadCSV = () => {
+    if (feedbacks.length === 0) return
+
+    const headers = ['Name', 'Registration Number', 'Email', 'UI Rating', 'Helpful Rating', 'Comment']
+    
+    const rows = feedbacks.map(f => {
+      const escapeCell = (cell) => {
+        if (cell == null) return '""'
+        const cellString = String(cell)
+        return `"${cellString.replace(/"/g, '""')}"`
+      }
+      
+      return [
+        escapeCell(extractCleanName(f.name)),
+        escapeCell(f.regNumber),
+        escapeCell(f.email),
+        escapeCell(f.uiRating || 'None'),
+        escapeCell(f.helpRating || 'None'),
+        escapeCell(f.comment || '')
+      ].join(',')
+    })
+
+    const csvContent = [headers.join(','), ...rows].join('\n')
+    
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', `feedbacks-${new Date().toISOString().split('T')[0]}.csv`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   return (
     <div className="admin-page">
       <div className="admin-header">
@@ -64,9 +101,35 @@ export default function AdminFeedbacks() {
             <h1 className="admin-header__title">User Feedbacks</h1>
             <p className="admin-header__sub">{feedbacks.length} feedbacks received</p>
           </div>
-          <button className="admin-back-btn" onClick={() => navigate('/admin')}>
-            ← Back
-          </button>
+          <div style={{ display: 'flex', gap: '12px' }}>
+            <button 
+              onClick={downloadCSV}
+              disabled={feedbacks.length === 0}
+              style={{
+                backgroundColor: 'var(--color-primary)',
+                color: 'white',
+                border: 'none',
+                padding: '8px 16px',
+                borderRadius: 'var(--radius)',
+                cursor: feedbacks.length === 0 ? 'not-allowed' : 'pointer',
+                opacity: feedbacks.length === 0 ? 0.6 : 1,
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              Download CSV
+            </button>
+            <button className="admin-back-btn" onClick={() => navigate('/admin')}>
+              ← Back
+            </button>
+          </div>
         </div>
       </div>
 
